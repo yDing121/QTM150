@@ -1,0 +1,325 @@
+---
+title: "HW 4"
+author: "Lance Ding"
+date: "March 2023"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+pacman::p_load(knitr, tidyverse, janitor)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Instructions
+
+**Write this homework acting as if I don't know what I asked you. For example, don't simply list question numbers for the headings. If you gave this document to someone else who didn't know the assignment, they should be able to understand what you did by reading the headings, code, and accompanying text.**
+
+**Look to my HW1 and RMarkdown Organization examples for how to write good headings and organize your assignment.**
+
+This HW is worth 10 total points. It is adapted from Dr. Martin van der Linden at Emory.
+
+1. Change the author and date fields in the header above to your name and the date.
+
+2. Make sure to load any packages you may need right at the start. Do *NOT* include the `learnr` package, ever, unless you are writing an interactive Tutorial (which you won't do in this) - this will cause problems.
+
+3. Ensure that no chunks have the `include = FALSE` or `echo = FALSE` option, as I want to be able to see *all* your code and output.
+
+4. Brief but descriptive headings and document organization (answers under headings, text near relevant code, brief explanatory text as indicated below, etc.) (1 pt)
+
+5. Load the `fivethirtyeight` R package and the data frames `classic_rock_raw_data` and `classic_rock_song_list`. Explore the data frames a bit and figure out what they contain (you don't need to include this code in your homework). 
+
+    First, note that there's an error in the `classic_rock_song_list` file - an Elton John song is listed as being released in 1071, when it was actually 1971. Fix that using `mutate()` and `case_when()` (or another method of your choosing that fixes that ONE entry). Then:
+
+    Add a new column to `classic_rock_raw_data` with the year each song was released using a join. Print the resulting data frame to prove to me you've done it (don't use `head()`, just let it print the first few default number of observations). Avoid ending up with any columns that end in `.x` or `.y`.
+    
+    HINT: Make sure you end up with as many observations in the new joined data frame as in the initial `classic_rock_raw_data`. You may need to execute the join on *two or more columns* to do this. Some songs with the same title have more than one artist, so if you join on `song` only you might add observations by creating two different records for each song play with different release years. There is a single column you can use to make this join work, but you may also use multiple columns that identify a unique observation. (3 pts)
+    
+5B. **BONUS 2 pts**. This can replace points you lose elsewhere (even for any questions you skip) but cannot raise your total score over 10/10. 
+
+This is an exercise to help you see the value of a join like the above.
+
+Roughly speaking, in the U.S. radio stations with a callsign beginning with "K" are located west of the Mississippi River, while those beginning with "W" are located to its east. I want you to visualize the distribution of the release years of the songs played by all these radio stations, split into two categories: west and east. It's up to you to choose a good visualization type that achieves this goal.
+
+The easiest way to do the east/west splitting involves the `substr()` (or sub-string) function. To extract the first letter of a variable, you would use `substr(<VARIABLE NAME>, 1, 1)` - if you check the documentation using `?substr`, hopefully you can figure out why this is. This should allow you to then create a new variable for west vs. east of the Mississippi, and then you can apply your existing data visualization skills.
+
+Make sure the graph has a title, human-readable axis labels, human-readable legend labels, and NO legend title.
+
+Describe what you see in about 1-2 sentences. Note what you're seeing is a distribution of the release years of the song plays from radio stations, not the years in which these stations released songs (radio stations don't release songs). If you are still confused about this, do a bit more research on the help page for the data frames and/or read the article linked there that they provide the data for.
+
+Final note: you should *not* be getting a result that suggests western radio stations play way more songs than eastern radio stations. The numbers should be roughly equivalent. If you have a result suggesting this, rethink your plot.
+
+6. For the rest of this homework we will be tidying a data set on migrations from the United Nations (UN), which you can find on Canvas. The data set contains the number of residents of different countries and regions of the world who have been classified as “migrants” in various years. (The actual data set you can download from the UN website is really messy - the version on Canvas is already somewhat trimmed down and cleaned.) 
+
+    First, import the data (using `read_csv()` from `readr` rather than `read.csv()`). Then drop the `Sort order`, `Notes`, `Country code`, and `Type of data (a)` columns from the data frame - we don't need them - and rename `Major area, region, country or area of destination` to `area_dest`. Note that if you're in a `dplyr` verb and want to refer to a column/variable name that has a space in it, you must surround the whole name in backticks ``. The resulting data frame should have dimensions 237 x 19. (0.5 pts)
+    
+7. Ugh, those remaining variable names have all those spaces and weird capitalization and it's just all TOO MUCH. Let's fix that, using the function (that you may not have quite learned yet) `janitor::clean_names()`. Look [here](https://cran.r-project.org/web/packages/janitor/vignettes/janitor.html#clean-data.frame-names-with-clean_names) or in Tutorial 10.1 for an introduction. Remember you might need to install this function's package first!
+
+    You can make all variable names `snake_case` (the good and righteous choice) or `camelCase` (the devil's coding). Print the first few rows of your result. (0.5 pts)
+    
+8. Scan through the data a bit. Does there appear to be any data *missing*? If so, what sort of data is it (just tell me generally, no need to list every single value or anything)? How does that "missing" data seem to be stored (that is, what "value" indicates some data is missing)? Answer in brief text. (0.5 pts)
+    
+9. The values for the number of migrants by sex are currently spread across a number of columns. Let's make the data frame more tidy by having the number of migrants in a single column; a row for each country, sex (Male, Female, or Both), and year; and 4 columns for the country/region, sex, year, and number of migrants. **HINT**: You'll need some combination of `pivot_longer()`, `pivot_wider()`, `separate()`, and/or `unite()` to accomplish this (or if you can figure out another way, that's fine, godspeed!).
+
+    You should end up with a data frame that is 4,266 x 4. (2 pts)
+
+10. Great, now I'd like you to sum up the total number of migrants across all countries in each year in our dataset. -Starts coding- This should be eas...oh, hell. There's a problem we still need to solve.
+
+    i) **Identify, describe in text, and solve it.** HINT: Do those values in n_migrants look quite right? (1 pt)
+
+        We'll learn more about this code later, but here's what you would use, along with a `dplyr` verb, to solve this remaining issue: `as.double(str_replace_all(n_migrants, " ", ""))`.
+    
+        I think you should be getting to the point where, even though you haven't seen it before, you should be able to puzzle out on your own what `str_replace_all()` does - at least if I tell you "str" is short for "string." Remember the help pages! But as an extra hint, check what `str_replace_all(string = "apples and bananas", pattern = " ", replacement = "")` does.
+    
+    ii) What happened to those missing values from question 7? How did they change/how are they stored now? (0.3 pts)
+    
+(You don't actually need to give me the total migrants per year once you fix this issue, it was just a plot device to move us along.)
+
+11. Why did we do any of this? Where was the value? 
+
+    I'd like you to now create a (facetted) plot of the number of migrants by binary sex (1 line for males, 1 for females, with apologies to our non-binary friends) over time in Japan, China, and South Sudan. See the value now? (1 pt)
+    
+12. One last question: what's up with that South Sudan plot? Trace this back to an issue in our data frame and explain why it looks the way it does. (0.2 pts)
+
+    
+**To submit this assignment:**
+
+Ideally, knit straight to PDF by changing `html_document` to `pdf_document` in line 5 above. This should work as long as you properly installed LaTeX in Tutorial 0.1. Otherwise:
+
+1. Knit to HTML. An HTML document should open automatically in another RStudio window.
+
+2. Click "Open in Browser" in that HTML document. It should open as a webpage in your default browser (e.g. Chrome).
+
+3. Click Ctrl+P/Command+P, but instead of printing a hard copy on your printer click "Save as PDF."
+
+4. Save and upload that document to Canvas.
+    
+A note on PDF formatting: you may notice that long lines of code "fly off the side of the page" when you knit to PDF. To fix this:
+
+*If you're on a Windows machine*: 
+
+* Install the `formatR` package
+
+* Change your `opts_chunk$set` code line to the following: `knitr::opts_chunk$set(echo = TRUE, tidy.opts=list(width.cutoff=80), tidy=TRUE)`
+
+That should force your code to always wrap rather than fly off the edge of the page of a PDF. Note this does not fix issues of, say, plot titles that are too long getting cut off. But it should fix all the errors with your code not wrapping.
+Happy PDFing!
+
+*If you're on a Mac*: I don't have an easy solution for you. Try and keep your lines of code under about 80 characters. Feel free to use more vertical lines of code to accomplish this. But don't waste large amounts of time formatting. I'll ask you for clarification if something critical is missing.    
+
+
+------BEGIN ANSWER BELOW--------
+```{r load packages}
+pacman::p_load(tidyverse)
+library(fivethirtyeight)
+data(classic_rock_song_list, classic_rock_raw_data)
+```
+
+# Exploring and Editing `classic_rock_song_list` and `classic_rock_raw_data`
+
+We are going to explore the `classic_rock_song_list` dataset from the `fivethirtyeight` library. First we can take a look at some summary statistics of the data:
+```{r exploring classic_rock_song_list}
+dim(classic_rock_song_list)
+summary(classic_rock_song_list)
+```
+
+From this output we can see that this is a dataset with **2229** rows and **7** columns. Looking at the data dictionary (code not shown), we now know that this `classic_rock_song_list` is a dataset containing metadata of (presumably) classic rock songs. There is an anomaly in the `release_year` column - the minimum, or earliest, year is **1071**, which doesn't make sense because it is way too low. It is likely a typo, and the entry was most likely for **1971**. We can fix that using `mutate()` and `case_when()`: 
+```{r fix incorrect year}
+crsl <- classic_rock_song_list %>% 
+  mutate(release_year = case_when(
+    release_year < 1100 ~ release_year + 900,
+    TRUE ~ release_year + 0
+    )
+  )
+
+crsl %>%
+  summary()
+# print(crsl) # debug
+```
+
+*I chose to use `<1100` as a condition to fix all cases that may have a mistyped 9 (if there were any more of those).*
+
+Looking at the summary statistics of the new dataframe `crsl`, we can see that the anomaly is no longer there - the minimum value of `release_year` is 1955, which is a much more sensible value.
+
+We will now shift our focus to `classic_rock_raw_data`. We want to append information on the songs' release dates to this dataframe, and we will do so with a `left_join()`. But before we do that, we have to first take a look at `classic_rock_raw_data` to figure out the variables we will be joining on.
+
+```{r exploring classic_rock_raw_data}
+summary(classic_rock_raw_data)
+print(classic_rock_raw_data)
+dim(classic_rock_raw_data)
+```
+
+It looks like both `classic_rock_song_list` and `classic_rock_raw_data` have the `combined` column that details the "song and artist name combined", according to their data dictionaries. We will use this common variable to join the `release_year` information from `classic_rock_song_list` to `classic_rock_raw_data`.
+
+```{r joining classic_rock_raw_data and classic_rock_song_list}
+crrd <- classic_rock_raw_data %>% 
+  left_join(crsl %>%
+              select(combined, release_year),
+            by = "combined")
+dim(crrd) # debug
+print(crrd)
+```
+
+## Visualizing `release_year` with respect to radio station location
+
+To put this newly joined dataset to use, we will create a visualization of `crrd`. In specific, we will use the callsign of the radio stations in each entry to roughly determine the location of the radio station with respect to the Mississippi River. We will then create an overlayed density plot of the distribution of `release_year` with respect to location.
+
+```{r visualizing crrd}
+# crrd %>% 
+#   mutate(location = case_when(
+#     substr(callsign, 1, 1) == "K" ~ "West",
+#     substr(callsign, 1, 1) == "W" ~ "East"
+#     )
+#   ) %>% 
+#   group_by(location, release_year) %>% 
+#   summarize(cnt = n()) %>% 
+#   ggplot(mapping = aes(x = release_year, y = cnt,
+#                        fill = location)) +
+#   geom_bar(stat = "identity", position = position_dodge())
+
+crrd %>% 
+  mutate(location = case_when(
+    substr(callsign, 1, 1) == "K" ~ "West",
+    substr(callsign, 1, 1) == "W" ~ "East"
+    )
+  ) %>%
+  ggplot(mapping = aes(x = release_year, fill = location)) +
+  geom_density(alpha = 0.5) +
+  labs(title = "Distribution of Release Years of Songs by Location",
+       x = "Release Year", y = "Density") + 
+  theme(legend.title = element_blank())
+```
+
+It seems like the stations on the West of the Mississippi River tended to play more of the newer songs, as indicated by the stronger right skew.
+
+# Tidying and Cleaning `UN_Migrant_2015`
+We will be tidying and cleaning up the dataset from `UN_Migrant_2015`, which can be found on canvas. I have the dataset in the local subdirectory `./Datasets`, and will use `read_csv()` to import the dataset into R.
+```{r Load UN dataset}
+UN = read_csv("./Datasets/UN_Migrant_2015.csv")
+# knitr::kable(head(UN, 5))
+```
+
+Since we will not be needing them, we will use `select` to drop `Sort order`, `Notes`, `Country code` and `Type of data (a)`. Also, we will rename `Major area, region, country or area of destination` to `area_dest` for simplicity's sake.
+
+```{r drop irrelevant columns}
+UN <- UN %>% 
+  select(-c("Sort order", "Notes", "Country code", "Type of data (a)")) %>% 
+  rename("area_dest" ="Major area, region, country or area of destination")
+
+dim(UN)
+```
+
+We will now use `janitor::clean_names()` to clean up the names of our columns - I agree that these capital letters are kind dumb.
+
+```{r clean names}
+UN <- UN %>% 
+  janitor::clean_names()
+# knitr::kable(head(UN))
+print(UN)
+```
+
+After taking a look into the csv file, we can see that there are some values with `..`. These are probably the missing values. They appear in the entries for South Sudan - this is probably due to the lack of data for South Sudan in the relevant categories.
+
+## Reshaping `UN`
+
+We will now reshape our dataset. The data is currently in a wide format, with its longitudinal data stored in columns. The data is hard to deal with in its default state, so we will split the dataset into 3 - `UN_both`, `UN_male` and `UN_female` and clean each individual sub-dataframe, then combine the three using `rbind()`.
+
+*I could not figure out how to do this in 1 step - is it possible? If so, how do we do it?*
+
+```{r reshape UN}
+UN_both <- UN %>% 
+  select(c("area_dest", starts_with("both")))
+
+UN_both <- UN_both %>% 
+  pivot_longer(cols = starts_with("both"),
+               names_to = "both_year",
+               values_to = "n_migrants") %>% 
+  separate(col = "both_year",
+           into = c("sex", "year"),
+           sep = "_"
+           )
+# print(UN_both) # debug
+
+UN_male <- UN %>% 
+  select(c("area_dest", starts_with("male")))
+
+
+UN_male <- UN_male %>%
+  pivot_longer(cols = starts_with("male"),
+               names_to = "male_year",
+               values_to = "n_migrants") %>% 
+  separate(col = "male_year",
+           into = c("sex", "year"),
+           sep = "_"
+           )
+# print(UN_male) # debug
+
+UN_female <- UN %>% 
+  select(c("area_dest", starts_with("female")))
+
+UN_female <- UN_female %>% 
+  pivot_longer(cols = starts_with("female"),
+               names_to = "female_year",
+               values_to = "n_migrants") %>% 
+  separate(col = "female_year",
+           into = c("sex", "year"),
+           sep = "_"
+           )
+# print(UN_female) # debug
+
+# combine
+UN <- rbind(UN_both, UN_male, UN_female) %>% 
+  janitor::clean_names()
+
+print(UN)
+```
+
+As the output shows, we have the correct dimensions on our final dataset, and the newly reshaped dataset is much easier to read.
+
+## Total Number of Migrants per Year
+
+We will now find the total number of migrants across all countries in each year in `UN`. However, there is a problem - the numbers are strings with a space separating every 3 powers of 10. This makes summing impossible in the current state of the data. We will use `mutate()` in conjunction with `str_replace_all()` and `as_double()` to remove all the dividing whitespace and coerce all the values into the **double** type. This should change all the missing values into the corresponding "missing value value" for numeric types, which is `NA`.
+
+```{r total n_migrants}
+UN <- UN %>% 
+  mutate(n_migrants = as.double(str_replace_all(n_migrants, " ", "")),
+         year = as.double(year))
+
+UN %>%
+  group_by(year) %>% 
+  summarize(sum(n_migrants, na.rm = TRUE)) %>% 
+  ungroup()
+
+UN %>% 
+  filter(area_dest == "South Sudan")
+```
+
+*Although it isn't required, I still went ahead and did it for some practice :D. In this case, where data is missing for only 1 country, should I be dropping data like I did above, or should I interpolate?*
+
+The above output shows a successful sum of `n_migrants` across all of our countries in each year, and the bottom output confirms my suspicion of the treatment of missing values.
+
+## Visualizing the cleaned `UN` Dataset
+
+With our cleaned dataset, we can create visualizations quickly and easily. For example, here is a plot of `n_migrants` with respect to time facetted on `area_dest` for Japan, China and South Sudan.
+
+```{r plot migrants with respect to time and area}
+UN %>%
+  filter((area_dest == "Japan" | area_dest == "China" | area_dest == "South Sudan") & sex != "both") %>% 
+  ggplot(mapping = aes(x = year, y = n_migrants, color = sex)) +
+  geom_point() +
+  geom_line() +
+  facet_grid(area_dest ~ .) + 
+  labs(x = "Year",
+       y = "Migrant Count",
+       title = "Number of Migrants on Year for China, Japan and South Sudan") + 
+  theme(legend.title = element_blank())
+
+# UN %>% # debug
+#   filter((area_dest == "Japan" | area_dest == "China" | area_dest == "South Sudan") & sex != "both") %>% 
+#   print()
+```
+
+*I was confused for at least 20 minutes at why I couldn't get the plot to exclude the data for "both" until I checked some example code online and saw that the logical "AND" operator was `&` and not `&&` like in most other programming languages*
+
+The plot for South Sudan is looks like it is missing points for 1990 - 2005. This makes sense, since we saw missing values for South Sudan in the dataset near the start of this analysis. This probably means that `ggplot` treats missing values literally as blank values and ignores them.
