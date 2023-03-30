@@ -178,9 +178,9 @@ message %>%
 ### Number of Words
 According to the challenge, a “word” is a set of characters with no white space - in other words, any non-whitespace element in the `message` vector is a "word". We will use `str_trim()` to remove the whitespace then use `length()` to find the number of elements in the vector.
 ```{r number of words}
-message <- message %>% 
-  str_trim()
-length(message)
+message %>% 
+  str_trim() %>% 
+  length()
 ```
 
 ### Show Punctuation Marks
@@ -193,5 +193,21 @@ str_view_all(message, "[:punct:]")
 The final recommended warm-up exercise wants us to print the longest "word" in the scrambled message in all caps. To do this, we must first identify the longest word in the message. We can do that with a composition of `str_length()` and `max()`. Now that we know the max length, we can use this length as a condition to match the string with this length in `message` by using array indexing `[]`. Finally, we use `str_to_upper()` to capitalize the "word".
 ```{r print longest word in caps}
 str_to_upper(message[str_length(message) == max(str_length(message))])
+```
+
+## Decoding the Message
+
+We will now follow the steps on the challenge page to decode the message. We first remove any whitespace before and after each word using `str_trim()`.
+```{r remove whitespace}
+message <- message %>% 
+  str_trim()
+```
+
+Then we drop all characters off the end of each word that is more than 16 characters long. To do so, we first locate all strings longer than 16 characters, then we replace those strings with their respective first 16 characters.
+```{r make length 16}
+message[str_length(message) > 16] <- str_sub(message[str_length(message) > 16], 1, 16)
+
+# Debug
+max(str_length(message))
 ```
 

@@ -638,9 +638,9 @@ white space - in other words, any non-whitespace element in the
 <code>message</code> vector is a “word”. We will use
 <code>str_trim()</code> to remove the whitespace then use
 <code>length()</code> to find the number of elements in the vector.</p>
-<pre class="r"><code>message &lt;- message %&gt;% 
-  str_trim()
-length(message)</code></pre>
+<pre class="r"><code>message %&gt;% 
+  str_trim() %&gt;% 
+  length()</code></pre>
 <pre><code>## [1] 127</code></pre>
 </div>
 <div id="show-punctuation-marks" class="section level3">
@@ -652,26 +652,26 @@ we employ <code>str_view_all()</code>, and use the regex character class
 <pre class="r"><code>str_view_all(message, &quot;[:punct:]&quot;)</code></pre>
 <pre><code>## Warning: `str_view()` was deprecated in stringr 1.5.0.
 ## ℹ Please use `str_view_all()` instead.</code></pre>
-<pre><code>##  [1] │ Koila&lt;!&gt;
-##  [2] │ In
-##  [3] │ kiew&lt;,&gt;
-##  [4] │ a
-##  [5] │ humble
+<pre><code>##  [1] │               Koila&lt;!&gt;
+##  [2] │                In   
+##  [3] │                kiew&lt;,&gt;
+##  [4] │                    a
+##  [5] │            humble   
 ##  [6] │ kaudevillianugh&lt;?&gt;aoghajdbn
-##  [7] │ kezeran&lt;,&gt;
-##  [8] │ casz
-##  [9] │ kicariouslb
-## [10] │ as
-## [11] │ bozh
-## [12] │ kiczim
-## [13] │ ughhh&lt;!&gt;and
-## [14] │ killain
-## [15] │ bb
-## [16] │ zhe
-## [17] │ kicissizudes
-## [18] │ ughhh&lt;!&gt;of
-## [19] │ faze&lt;.&gt;
-## [20] │ Thisughhhh&lt;!&gt;
+##  [7] │          kezeran&lt;,&gt;   
+##  [8] │              casz   
+##  [9] │          kicariouslb
+## [10] │                as   
+## [11] │                 bozh
+## [12] │            kiczim   
+## [13] │            ughhh&lt;!&gt;and
+## [14] │              killain
+## [15] │                bb   
+## [16] │               zhe   
+## [17] │         kicissizudes
+## [18] │             ughhh&lt;!&gt;of
+## [19] │                faze&lt;.&gt;
+## [20] │          Thisughhhh&lt;!&gt;
 ## ... and 107 more</code></pre>
 </div>
 <div id="printing-longest-word-in-capitals" class="section level3">
@@ -687,6 +687,23 @@ capitalize the “word”.</p>
 <pre class="r"><code>str_to_upper(message[str_length(message) == max(str_length(message))])</code></pre>
 <pre><code>## [1] &quot;KAUDEVILLIANUGH?AOGHAJDBN&quot;</code></pre>
 </div>
+</div>
+<div id="decoding-the-message" class="section level2">
+<h2>Decoding the Message</h2>
+<p>We will now follow the steps on the challenge page to decode the
+message. We first remove any whitespace before and after each word using
+<code>str_trim()</code>.</p>
+<pre class="r"><code>message &lt;- message %&gt;% 
+  str_trim()</code></pre>
+<p>Then we drop all characters off the end of each word that is more
+than 16 characters long. To do so, we first locate all strings longer
+than 16 characters, then we replace those strings with their respective
+first 16 characters.</p>
+<pre class="r"><code>message[str_length(message) &gt; 16] &lt;- str_sub(message[str_length(message) &gt; 16], 1, 16)
+
+# Debug
+max(str_length(message))</code></pre>
+<pre><code>## [1] 16</code></pre>
 </div>
 </div>
 
