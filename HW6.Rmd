@@ -1,7 +1,7 @@
 ---
 title: "HW 6"
-author: "Zach Binney"
-date: "October 2021"
+author: "Lance Ding"
+date: "March 2023"
 output: html_document
 ---
 
@@ -89,7 +89,109 @@ Ideally, knit straight to PDF by changing `html_document` to `pdf_document` in l
 
 ------BEGIN ANSWER BELOW--------
 
+## Load necessary packages
 
+```{r load raw_ab}
+raw_ab <- as_tibble(read.csv("./Datasets/raw_ab.csv"))
+# raw_ab <- read.csv("./Datasets/raw_ab.csv")
+```
 
+# Dr. Martin van der Linden HW5 : Exercises with `stringr`
 
+We will be working with Dr. Martin van der Linden's HW5 assignment. Specifically, we will clean the data in `raw_ab.csv` - a dataset containing abortion data from both the **Guttmacher Institue** and the **CDC**. 
+
+## Removing Missing Values from `raw_ab`
+
+We will start by removing all rows that either:
+
+* Does not contain any number
+* is `NA`
+
+We will accomplish that by using `str_detect()` in conjunction with regex to keep only rows that have digits in them. Since rows containing the value `NA` do not have any digits, this operation also removes rows with `NA`. We then store this new dataframe as `ab1`.
+
+```{r remove rows where CDC is empty or NA}
+
+ab1 <- raw_ab[str_detect(raw_ab$CDC, "\\d"),] %>% 
+  drop_na("CDC")
+ab1
+```
+
+## Removing Parentheses from the `CDC` and `AGI` columns of `ab1`
+
+Some of the values in the `CDC` and `AGI` columns in `ab1` contain parentheses. If we are to transform the columns into numerical data for computation, we must remove these parentheses. We use the string escape character with the regex escape character as well as the "or" (`|`) to find all parentheses, which we then replace with empty strings. This effectively removes all parentheses.
+```{r remove parentheses}
+ab2 <- ab1
+ab2$CDC <- ab2$CDC %>% 
+  str_replace_all("\\(|\\)", "")
+ab2$AGI <- ab2$AGI %>% 
+  str_replace_all("\\(|\\)", "")
+ab2
+```
+
+## Removing Thousand Separators in the `CDC` and `AGI` columns of `ab2`
+
+The values in the `CDCD` and `AGI` columns, in their raw form, are formatted such that every thousand, or 3 digits starting from the right, there is a `,` acting as a separator. Normally, this would increase human readability of large numbers, but in order to do numerical operations on these numbers we have to remove the commas. We do an operation similar to what we did with the parenthesis - finding commas with regex and replacing them with empty strings.
+
+```{r remove commas}
+ab3 <- ab2
+ab3$CDC <- ab3$CDC %>% 
+  str_replace_all(",", "")
+ab3$AGI <- ab3$AGI %>% 
+  str_replace_all(",", "")
+ab3
+```
+
+## Converting `ab3` to Numeric
+
+We are now ready to convert our numeric values to numeric types in R, which allows for computations. Using `select()`, we first drop the column `X` - we will not need this column. We will then use array indexing to grab the columns we want, then use `as.numeric()` in conjunction with `apply()` to execute this conversion.
+
+```{r numericalize}
+ab4 <- ab3 %>% 
+  select("year":"state")
+ab4[1:3] <- apply(ab4[,1:3], 2, function(x) as.numeric(x))
+ab4
+```
+
+# Decoding the Secret Message in `Puzzle 4.1`
+
+Apparently there is a secret message hidden in [this puzzle]("https://www.adventures-in-r.com/pas/pa-regex"). Let's load it and see what it is about. 
+
+```{r load message}
+message <- read.csv("https://www.dropbox.com/s/lgpn3vmksk3ssdo/scrambled_message.txt?dl=1", stringsAsFactors = FALSE)$Word
+head(message)
+```
+
+It looks like we have a very messy character vector. We will first do the Warm-up exercises, then try to decode the message.
+
+## Warm-up Exercises
+
+### Number of Characters
+The first warm-up wants us to find the number of characters there are in the message. We will assume that this means removing the spaces with `str_trim()` then summing the lengths (`str_length()`) of the remaining strings.
+
+```{r number of characters}
+message %>% 
+  str_trim() %>% 
+  str_length() %>% 
+  sum()
+```
+
+### Number of Words
+According to the challenge, a “word” is a set of characters with no white space - in other words, any non-whitespace element in the `message` vector is a "word". We will use `str_trim()` to remove the whitespace then use `length()` to find the number of elements in the vector.
+```{r number of words}
+message <- message %>% 
+  str_trim()
+length(message)
+```
+
+### Show Punctuation Marks
+The next warm-up exercise wants us to show all the punctuation marks in the scrambled message. To view all matches and highlight punctuation, we employ `str_view_all()`, and use the regex character class `[:punct:]` to match all punctuation.
+```{r show punctuation}
+str_view_all(message, "[:punct:]")
+```
+
+### Printing Longest Word in Capitals
+The final recommended warm-up exercise wants us to print the longest "word" in the scrambled message in all caps. To do this, we must first identify the longest word in the message. We can do that with a composition of `str_length()` and `max()`. Now that we know the max length, we can use this length as a condition to match the string with this length in `message` by using array indexing `[]`. Finally, we use `str_to_upper()` to capitalize the "word".
+```{r print longest word in caps}
+str_to_upper(message[str_length(message) == max(str_length(message))])
+```
 
