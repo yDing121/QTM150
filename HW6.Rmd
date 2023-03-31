@@ -211,3 +211,52 @@ message[str_length(message) > 16] <- str_sub(message[str_length(message) > 16], 
 max(str_length(message))
 ```
 
+The next step wants us to drop all words that contain the character sequence `ugh` followed with any number of h's then punctuation. We will do so by first using `str_detect` to check whether each element in `message` meets the deletion criterion by using the regex repetition operator `+` and the regex punctuation character class `[:punct:]` - this operation returns an array of booleans that tells us if each element meets the condition. We then flip every boolean in the array, meaning now the indices corresponding to the elements that **don't** meet the deletion criterion will say `TRUE`. Finally, we use this boolean array to subset `message`.
+```{r remove ugh}
+message <- message[!str_detect(message, "ugh+[:punct:]")]
+message
+```
+
+Following that, we are to replace all instances of exactly 2 `a`s with exactly 2 `e`s. We will do so by finding all elements of `message` that contain exactly 2 `a`s with `str_count()`. We then replace all the `a`s in those strings with `e`s. 
+
+*I forgot that `str_count()` existed at all before looking at the cheat sheet when checking this. I left my original solution with regex, which should also work.*
+```{r replace 2 a with 2 e}
+message[str_count(message, "a")==2] <- message[str_count(message, "a")==2] %>% 
+  str_replace_all("a", "e")
+
+# message[str_detect(message, "^.*a.*a.*$")] <- message[str_detect(message, "^.*a.*a.*$")] %>%
+#   str_replace_all("a", "e")
+
+message
+```
+
+The next step asks us to replace all `z`s with `t`s. This is simple - we can use `str_replace_all()` to quickly replace every `z` with a `t`.
+```{r replace z with t}
+message <- message %>% 
+  str_replace_all("z", "t")
+message
+```
+
+We then want to change all words that end in a `b` to a `y`. That means even words with punctuation like `dumb!` should be changed to `dumy!`. We use a **look around** to achieve the matching of only the `b` regardless of if there is punctuation behind it, then use `str_replace()` to replace the `b` with a `y`. This solution bypasses the potential need for **backreferencing**. 
+
+*Also, I couldn't quite figure out how to backreference one string from another string e.g. I don't know how to reference (match1) in the third argument of `str_replace()` - `str_replace(message, "(match1)", "not sure what to put here"))`*
+```{r change b end to y end}
+message <- str_replace(message, "b(?=($|[:punct:]$))", "y")
+message
+```
+
+Similarly, we now replace all words that start with a `k` to a `v`. We will detect both capitalization cases via **hard coding**, which is traditionally considered bad practice but since we are only dealing with one case we do not need a general solution. Also, we will not retain the capitalization of the `k` - we will replace all matches with a lowercase `v`.
+
+```{r change k start to v start}
+message <- message %>% 
+  str_replace("^(K|k)", "v")
+message
+```
+
+Finally, we combine `message` via `str_c()`.
+```{r combine}
+message %>% 
+  str_c(" ", collapse = "")
+```
+
+A quick google search tells us that this quote is from *V for Vendetta*, said by **Alan Moore**.
