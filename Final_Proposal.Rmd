@@ -1,0 +1,58 @@
+---
+title: "Final_Project_Proposal"
+author: "Lance Ding, Grayson Stark, Kristy Tran"
+date: "2023-04"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup}
+knitr::opts_chunk$set(echo = TRUE)
+pacman::p_load(tidyverse)
+```
+
+For our final project, we would like to do an analysis on [this dataset](https://docs.google.com/spreadsheets/d/1IPS5dBSGtwYVbjsfbaMCYIWnOuRmJcbequohNxCyGVw/edit?resourcekey#gid=1625408792) of salary information. It is a dataset generated from user responses to the 2021 version of [this survey](https://www.askamanager.org/2022/04/how-much-money-do-you-make-5.html) on [Ask a Manager](https://www.askamanager.org/). Each row records one respondee's answers to the survey, and each column records the respondees' answers to one question.
+
+*The dataset is saved locally in a subdirectory at `./Datasets/salary.csv`.*
+
+## Basic Exploration
+```{r basic exploration}
+salary <- read.csv("./Datasets/salary.csv")
+summary(salary)
+# skimr::skim(salary)
+```
+*skim() outputs a unicode character that cannot be rendered. I have commented it out to allow for the compilation of the pdf*
+
+
+Running `skim()` and `summary()` on the data tells us that there are **`r dim(salary)[1]`** rows and **`r dim(salary)[2]`** columns. Of these, we have 17 `character` columns, 1 `numeric` column and 6 `logical` columns. A quick look at the actual data reveals that we actually have 6 empty columns, which correspond to the 6 `logical` columns, 1 question column that corresponds to the `numeric` column, and 17 other question columns that correspond to the 17 `character` columns. For more details of the dataset and its columns, consult the codebook. 
+
+## Research Questions and Methods
+
+There are a few potential research questions that we are interested in answering:
+
+1. Is there an association between the **highest level of education attainment** and **annual salary**?
+2. Is there an association between **age**, **race** and **annual salary**?
+3. What industries have employees with the largest **work experience** to **age** ratio?
+4. Is there a significant difference in **income/education** between **men/women** or **white/minority**?
+
+To help answer these questions, we will likely need to employ these cleaning techniques:
+
+* *Separating/Uniting*
+  * *We may manually dirty up the dataset and to showcase an additional cleaning technique if we end up needing more than what materializes from the following*
+* Cleaning Variable Names
+  * Many of the variable names are crude, long, and contain spaces
+* Cleaning Missing Values
+  * Some individuals answered "prefer not to answer" to some questions
+* Re-coding Variables Values
+  * Some entries in the column corresponding to the work country can be cleaned up and united e.g. US, United States and United States of America to US
+* Cleaning Strings
+  * Some entries in the column corresponding to the work city also have state information, which we do not want and can use `stringr` to clean
+* Cleaning Factors
+  * Certain columns can be reordered for easier visualization. Also, many columns actually contain categorical data - respondees had to pick responses from radio buttons or check boxes - meaning we can factor them and do categorical computations on them
+
+## Visualizations
+
+* To answer our first research question, we could employ a **box-and-whisker** plot. 
+* To answer our second/third questions, we could use a **scatterplot**. 
+* To answer our fourth question, we could utilize a **facetted bar graph/histogram**.

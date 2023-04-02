@@ -694,7 +694,8 @@ capitalize the “word”.</p>
 message. We first remove any whitespace before and after each word using
 <code>str_trim()</code>.</p>
 <pre class="r"><code>message &lt;- message %&gt;% 
-  str_trim()</code></pre>
+  str_trim()
+# message</code></pre>
 <p>Then we drop all characters off the end of each word that is more
 than 16 characters long. To do so, we first locate all strings longer
 than 16 characters, then we replace those strings with their respective
@@ -704,37 +705,16 @@ first 16 characters.</p>
 # Debug
 max(str_length(message))</code></pre>
 <pre><code>## [1] 16</code></pre>
+<pre class="r"><code># message</code></pre>
 <p>The next step wants us to drop all words that contain the character
 sequence <code>ugh</code> followed with any number of h’s then
-punctuation. We will do so by first using <code>str_detect</code> to
-check whether each element in <code>message</code> meets the deletion
-criterion by using the regex repetition operator <code>+</code> and the
-regex punctuation character class <code>[:punct:]</code> - this
-operation returns an array of booleans that tells us if each element
-meets the condition. We then flip every boolean in the array, meaning
-now the indices corresponding to the elements that
-<strong>don’t</strong> meet the deletion criterion will say
-<code>TRUE</code>. Finally, we use this boolean array to subset
-<code>message</code>.</p>
-<pre class="r"><code>message &lt;- message[!str_detect(message, &quot;ugh+[:punct:]&quot;)]
-message</code></pre>
-<pre><code>##  [1] &quot;Koila!&quot;       &quot;In&quot;           &quot;kiew,&quot;        &quot;a&quot;            &quot;humble&quot;      
-##  [6] &quot;kezeran,&quot;     &quot;casz&quot;         &quot;kicariouslb&quot;  &quot;as&quot;           &quot;bozh&quot;        
-## [11] &quot;kiczim&quot;       &quot;killain&quot;      &quot;bb&quot;           &quot;zhe&quot;          &quot;kicissizudes&quot;
-## [16] &quot;faze.&quot;        &quot;kisage,&quot;      &quot;kenaar&quot;       &quot;a&quot;            &quot;keszige&quot;     
-## [21] &quot;of&quot;           &quot;zhe&quot;          &quot;kox&quot;          &quot;now&quot;          &quot;kacanz,&quot;     
-## [26] &quot;However,&quot;     &quot;zhis&quot;         &quot;kalorous&quot;     &quot;kisizazion&quot;   &quot;of&quot;          
-## [31] &quot;a&quot;            &quot;bygone&quot;       &quot;kexazion&quot;     &quot;szands&quot;       &quot;kivified,&quot;   
-## [36] &quot;kowed&quot;        &quot;kanquish&quot;     &quot;zhese&quot;        &quot;kermin,&quot;      &quot;kan&quot;         
-## [41] &quot;guarding&quot;     &quot;and&quot;          &quot;zhe&quot;          &quot;kiolenzlb&quot;    &quot;kicious&quot;     
-## [46] &quot;kiolazion&quot;    &quot;of&quot;           &quot;onlb&quot;         &quot;kerdicz&quot;      &quot;kengeance;&quot;  
-## [51] &quot;a&quot;            &quot;a&quot;            &quot;kozive&quot;       &quot;noz&quot;          &quot;in&quot;          
-## [56] &quot;kain,&quot;        &quot;zhe&quot;          &quot;kalue&quot;        &quot;keracizb&quot;     &quot;such&quot;        
-## [61] &quot;shall&quot;        &quot;kindicaze&quot;    &quot;and&quot;          &quot;zhe&quot;          &quot;kirzuous.&quot;   
-## [66] &quot;Kerilb&quot;       &quot;zhis&quot;         &quot;kichyssoise&quot;  &quot;kaars&quot;        &quot;kerbose,&quot;    
-## [71] &quot;so&quot;           &quot;lez&quot;          &quot;me&quot;           &quot;simplb&quot;       &quot;zhaz&quot;        
-## [76] &quot;izs&quot;          &quot;mb&quot;           &quot;good&quot;         &quot;you&quot;          &quot;you&quot;         
-## [81] &quot;K.&quot;</code></pre>
+punctuation. We achieve the matching by using the regex repetition
+character <code>+</code> and the punctuation character class
+<code>[:punct:]</code>. We then replace the matches with empty strings
+<code>&quot;&quot;</code>.</p>
+<pre class="r"><code>message &lt;- message %&gt;% 
+  str_replace_all(&quot;ugh+[:punct:]&quot;, &quot;&quot;)
+# message</code></pre>
 <p>Following that, we are to replace all instances of exactly 2
 <code>a</code>s with exactly 2 <code>e</code>s. We will do so by finding
 all elements of <code>message</code> that contain exactly 2
@@ -749,48 +729,14 @@ solution with regex, which should also work.</em></p>
 # message[str_detect(message, &quot;^.*a.*a.*$&quot;)] &lt;- message[str_detect(message, &quot;^.*a.*a.*$&quot;)] %&gt;%
 #   str_replace_all(&quot;a&quot;, &quot;e&quot;)
 
-message</code></pre>
-<pre><code>##  [1] &quot;Koila!&quot;       &quot;In&quot;           &quot;kiew,&quot;        &quot;a&quot;            &quot;humble&quot;      
-##  [6] &quot;kezeran,&quot;     &quot;casz&quot;         &quot;kicariouslb&quot;  &quot;as&quot;           &quot;bozh&quot;        
-## [11] &quot;kiczim&quot;       &quot;killain&quot;      &quot;bb&quot;           &quot;zhe&quot;          &quot;kicissizudes&quot;
-## [16] &quot;faze.&quot;        &quot;kisage,&quot;      &quot;keneer&quot;       &quot;a&quot;            &quot;keszige&quot;     
-## [21] &quot;of&quot;           &quot;zhe&quot;          &quot;kox&quot;          &quot;now&quot;          &quot;kecenz,&quot;     
-## [26] &quot;However,&quot;     &quot;zhis&quot;         &quot;kalorous&quot;     &quot;kisizazion&quot;   &quot;of&quot;          
-## [31] &quot;a&quot;            &quot;bygone&quot;       &quot;kexazion&quot;     &quot;szands&quot;       &quot;kivified,&quot;   
-## [36] &quot;kowed&quot;        &quot;kanquish&quot;     &quot;zhese&quot;        &quot;kermin,&quot;      &quot;kan&quot;         
-## [41] &quot;guarding&quot;     &quot;and&quot;          &quot;zhe&quot;          &quot;kiolenzlb&quot;    &quot;kicious&quot;     
-## [46] &quot;kiolazion&quot;    &quot;of&quot;           &quot;onlb&quot;         &quot;kerdicz&quot;      &quot;kengeance;&quot;  
-## [51] &quot;a&quot;            &quot;a&quot;            &quot;kozive&quot;       &quot;noz&quot;          &quot;in&quot;          
-## [56] &quot;kain,&quot;        &quot;zhe&quot;          &quot;kalue&quot;        &quot;keracizb&quot;     &quot;such&quot;        
-## [61] &quot;shall&quot;        &quot;kindicaze&quot;    &quot;and&quot;          &quot;zhe&quot;          &quot;kirzuous.&quot;   
-## [66] &quot;Kerilb&quot;       &quot;zhis&quot;         &quot;kichyssoise&quot;  &quot;keers&quot;        &quot;kerbose,&quot;    
-## [71] &quot;so&quot;           &quot;lez&quot;          &quot;me&quot;           &quot;simplb&quot;       &quot;zhaz&quot;        
-## [76] &quot;izs&quot;          &quot;mb&quot;           &quot;good&quot;         &quot;you&quot;          &quot;you&quot;         
-## [81] &quot;K.&quot;</code></pre>
+# message</code></pre>
 <p>The next step asks us to replace all <code>z</code>s with
 <code>t</code>s. This is simple - we can use
 <code>str_replace_all()</code> to quickly replace every <code>z</code>
 with a <code>t</code>.</p>
 <pre class="r"><code>message &lt;- message %&gt;% 
   str_replace_all(&quot;z&quot;, &quot;t&quot;)
-message</code></pre>
-<pre><code>##  [1] &quot;Koila!&quot;       &quot;In&quot;           &quot;kiew,&quot;        &quot;a&quot;            &quot;humble&quot;      
-##  [6] &quot;keteran,&quot;     &quot;cast&quot;         &quot;kicariouslb&quot;  &quot;as&quot;           &quot;both&quot;        
-## [11] &quot;kictim&quot;       &quot;killain&quot;      &quot;bb&quot;           &quot;the&quot;          &quot;kicissitudes&quot;
-## [16] &quot;fate.&quot;        &quot;kisage,&quot;      &quot;keneer&quot;       &quot;a&quot;            &quot;kestige&quot;     
-## [21] &quot;of&quot;           &quot;the&quot;          &quot;kox&quot;          &quot;now&quot;          &quot;kecent,&quot;     
-## [26] &quot;However,&quot;     &quot;this&quot;         &quot;kalorous&quot;     &quot;kisitation&quot;   &quot;of&quot;          
-## [31] &quot;a&quot;            &quot;bygone&quot;       &quot;kexation&quot;     &quot;stands&quot;       &quot;kivified,&quot;   
-## [36] &quot;kowed&quot;        &quot;kanquish&quot;     &quot;these&quot;        &quot;kermin,&quot;      &quot;kan&quot;         
-## [41] &quot;guarding&quot;     &quot;and&quot;          &quot;the&quot;          &quot;kiolentlb&quot;    &quot;kicious&quot;     
-## [46] &quot;kiolation&quot;    &quot;of&quot;           &quot;onlb&quot;         &quot;kerdict&quot;      &quot;kengeance;&quot;  
-## [51] &quot;a&quot;            &quot;a&quot;            &quot;kotive&quot;       &quot;not&quot;          &quot;in&quot;          
-## [56] &quot;kain,&quot;        &quot;the&quot;          &quot;kalue&quot;        &quot;keracitb&quot;     &quot;such&quot;        
-## [61] &quot;shall&quot;        &quot;kindicate&quot;    &quot;and&quot;          &quot;the&quot;          &quot;kirtuous.&quot;   
-## [66] &quot;Kerilb&quot;       &quot;this&quot;         &quot;kichyssoise&quot;  &quot;keers&quot;        &quot;kerbose,&quot;    
-## [71] &quot;so&quot;           &quot;let&quot;          &quot;me&quot;           &quot;simplb&quot;       &quot;that&quot;        
-## [76] &quot;its&quot;          &quot;mb&quot;           &quot;good&quot;         &quot;you&quot;          &quot;you&quot;         
-## [81] &quot;K.&quot;</code></pre>
+# message</code></pre>
 <p>We then want to change all words that end in a <code>b</code> to a
 <code>y</code>. That means even words with punctuation like
 <code>dumb!</code> should be changed to <code>dumy!</code>. We use a
@@ -804,24 +750,7 @@ from another string e.g. I don’t know how to reference (match1) in the
 third argument of <code>str_replace()</code> -
 <code>str_replace(message, &quot;(match1)&quot;, &quot;not sure what to put here&quot;))</code></em></p>
 <pre class="r"><code>message &lt;- str_replace(message, &quot;b(?=($|[:punct:]$))&quot;, &quot;y&quot;)
-message</code></pre>
-<pre><code>##  [1] &quot;Koila!&quot;       &quot;In&quot;           &quot;kiew,&quot;        &quot;a&quot;            &quot;humble&quot;      
-##  [6] &quot;keteran,&quot;     &quot;cast&quot;         &quot;kicariously&quot;  &quot;as&quot;           &quot;both&quot;        
-## [11] &quot;kictim&quot;       &quot;killain&quot;      &quot;by&quot;           &quot;the&quot;          &quot;kicissitudes&quot;
-## [16] &quot;fate.&quot;        &quot;kisage,&quot;      &quot;keneer&quot;       &quot;a&quot;            &quot;kestige&quot;     
-## [21] &quot;of&quot;           &quot;the&quot;          &quot;kox&quot;          &quot;now&quot;          &quot;kecent,&quot;     
-## [26] &quot;However,&quot;     &quot;this&quot;         &quot;kalorous&quot;     &quot;kisitation&quot;   &quot;of&quot;          
-## [31] &quot;a&quot;            &quot;bygone&quot;       &quot;kexation&quot;     &quot;stands&quot;       &quot;kivified,&quot;   
-## [36] &quot;kowed&quot;        &quot;kanquish&quot;     &quot;these&quot;        &quot;kermin,&quot;      &quot;kan&quot;         
-## [41] &quot;guarding&quot;     &quot;and&quot;          &quot;the&quot;          &quot;kiolently&quot;    &quot;kicious&quot;     
-## [46] &quot;kiolation&quot;    &quot;of&quot;           &quot;only&quot;         &quot;kerdict&quot;      &quot;kengeance;&quot;  
-## [51] &quot;a&quot;            &quot;a&quot;            &quot;kotive&quot;       &quot;not&quot;          &quot;in&quot;          
-## [56] &quot;kain,&quot;        &quot;the&quot;          &quot;kalue&quot;        &quot;keracity&quot;     &quot;such&quot;        
-## [61] &quot;shall&quot;        &quot;kindicate&quot;    &quot;and&quot;          &quot;the&quot;          &quot;kirtuous.&quot;   
-## [66] &quot;Kerily&quot;       &quot;this&quot;         &quot;kichyssoise&quot;  &quot;keers&quot;        &quot;kerbose,&quot;    
-## [71] &quot;so&quot;           &quot;let&quot;          &quot;me&quot;           &quot;simply&quot;       &quot;that&quot;        
-## [76] &quot;its&quot;          &quot;my&quot;           &quot;good&quot;         &quot;you&quot;          &quot;you&quot;         
-## [81] &quot;K.&quot;</code></pre>
+# message</code></pre>
 <p>Similarly, we now replace all words that start with a <code>k</code>
 to a <code>v</code>. We will detect both capitalization cases via
 <strong>hard coding</strong>, which is traditionally considered bad
@@ -831,29 +760,12 @@ general solution. Also, we will not retain the capitalization of the
 <code>v</code>.</p>
 <pre class="r"><code>message &lt;- message %&gt;% 
   str_replace(&quot;^(K|k)&quot;, &quot;v&quot;)
-message</code></pre>
-<pre><code>##  [1] &quot;voila!&quot;       &quot;In&quot;           &quot;view,&quot;        &quot;a&quot;            &quot;humble&quot;      
-##  [6] &quot;veteran,&quot;     &quot;cast&quot;         &quot;vicariously&quot;  &quot;as&quot;           &quot;both&quot;        
-## [11] &quot;victim&quot;       &quot;villain&quot;      &quot;by&quot;           &quot;the&quot;          &quot;vicissitudes&quot;
-## [16] &quot;fate.&quot;        &quot;visage,&quot;      &quot;veneer&quot;       &quot;a&quot;            &quot;vestige&quot;     
-## [21] &quot;of&quot;           &quot;the&quot;          &quot;vox&quot;          &quot;now&quot;          &quot;vecent,&quot;     
-## [26] &quot;However,&quot;     &quot;this&quot;         &quot;valorous&quot;     &quot;visitation&quot;   &quot;of&quot;          
-## [31] &quot;a&quot;            &quot;bygone&quot;       &quot;vexation&quot;     &quot;stands&quot;       &quot;vivified,&quot;   
-## [36] &quot;vowed&quot;        &quot;vanquish&quot;     &quot;these&quot;        &quot;vermin,&quot;      &quot;van&quot;         
-## [41] &quot;guarding&quot;     &quot;and&quot;          &quot;the&quot;          &quot;violently&quot;    &quot;vicious&quot;     
-## [46] &quot;violation&quot;    &quot;of&quot;           &quot;only&quot;         &quot;verdict&quot;      &quot;vengeance;&quot;  
-## [51] &quot;a&quot;            &quot;a&quot;            &quot;votive&quot;       &quot;not&quot;          &quot;in&quot;          
-## [56] &quot;vain,&quot;        &quot;the&quot;          &quot;value&quot;        &quot;veracity&quot;     &quot;such&quot;        
-## [61] &quot;shall&quot;        &quot;vindicate&quot;    &quot;and&quot;          &quot;the&quot;          &quot;virtuous.&quot;   
-## [66] &quot;verily&quot;       &quot;this&quot;         &quot;vichyssoise&quot;  &quot;veers&quot;        &quot;verbose,&quot;    
-## [71] &quot;so&quot;           &quot;let&quot;          &quot;me&quot;           &quot;simply&quot;       &quot;that&quot;        
-## [76] &quot;its&quot;          &quot;my&quot;           &quot;good&quot;         &quot;you&quot;          &quot;you&quot;         
-## [81] &quot;v.&quot;</code></pre>
+# message</code></pre>
 <p>Finally, we combine <code>message</code> via
 <code>str_c()</code>.</p>
 <pre class="r"><code>message %&gt;% 
   str_c(&quot; &quot;, collapse = &quot;&quot;)</code></pre>
-<pre><code>## [1] &quot;voila! In view, a humble veteran, cast vicariously as both victim villain by the vicissitudes fate. visage, veneer a vestige of the vox now vecent, However, this valorous visitation of a bygone vexation stands vivified, vowed vanquish these vermin, van guarding and the violently vicious violation of only verdict vengeance; a a votive not in vain, the value veracity such shall vindicate and the virtuous. verily this vichyssoise veers verbose, so let me simply that its my good you you v. &quot;</code></pre>
+<pre><code>## [1] &quot;voila! In view, a humble veudevillien veteran, cast vicariously as both victim and villain by the vicissitudes of fate. This visage, no mere veneer of vanity, is a vestige of the vox populi now vecent, vanished. However, this valorous visitation of a bygone vexation stands vivified, and has vowed to vanquish these venal and virulent vermin, van guarding vice and vouchsafing the violently vicious and voracious violation of volition. The only verdict is vengeance; a vendetta, held as a votive not in vain, for the value and veracity of such shall one day vindicate the vigilant and the virtuous. verily this vichyssoise of verbiage veers most verbose, so let me simply add that its my very good honour to meet you and you may call me v. &quot;</code></pre>
 <p>A quick google search tells us that this quote is from <em>V for
 Vendetta</em>, said by <strong>Alan Moore</strong>.</p>
 </div>
