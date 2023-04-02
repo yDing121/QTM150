@@ -1,0 +1,56 @@
+---
+title: "R Notebook"
+output:
+  html_notebook: default
+  html_document:
+    df_print: paged
+  pdf_document: default
+---
+
+
+```{r}
+library(codebookr)
+library(codebook)
+
+```
+
+
+
+
+```{r}
+thing <- list(
+  `How old are you?` = "Age of participants in the study",
+  `What industry do you work in?` = "industry participants work in",
+  `Job title` = "participants job title",
+  `If your job title needs additional context, please clarify here:` = "participants given opportunity to elaborate on the nature of their job",
+  `What is your annual salary? (You'll indicate the currency in a later question. If you are part-time or hourly, please enter an annualized equivalent -- what you would earn if you worked the job 40 hours a week, 52 weeks a year.)` = "Participants' annual salary based on if they worked 40 hours and 52 weeks per year.",
+  `How much additional monetary compensation do you get, if any (for example, bonuses or overtime in an average year)? Please only include monetary compensation here, not the value of benefits.` = "Monetary compensation",
+  `Please indicate the currency` = "currency of participants income",
+  `If "Other," please indicate the currency here:` = "If currency was not part of the provided options, participants specify here",
+  `What country do you work in?` = "country where participants work",
+  `If you're in the U.S., what state do you work in?` = "state if participants work in the US",
+  `What city do you work in?` = "city where participants work",
+  `How many years of professional work experience do you have overall?` = "years of work experience, provided in a range of years",
+  `How many years of professional work experience do you have in your field?` = "years of work experience in specified industry, provided in a range of years",
+   `What is your highest level of education completed?` = "highest education level completed",
+    `What is your gender?` = "participants' gender",
+    `What is your race? (Choose all that apply.)` = "participants' race, participants selected all that applied"
+)
+
+
+
+new_codebook <- codebookr::codebook(salary,
+                                       title = "Salary Codebook", 
+                                       subtitle = "by Grayson Stark, Lance , Kristy Tran", 
+                                       description = "This codebook was created for the final project of our QTM 150 class. Here is a basic 
+                    description of our study, our methods, 
+                    our sample, and protocols.")
+
+
+```
+
+```{r}
+print(new_codebook, path = "new_codebook.pdf")
+```
+
+
