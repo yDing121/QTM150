@@ -25,7 +25,7 @@ summary(salary)
 *skim() outputs a unicode character that cannot be rendered. I have commented it out to allow for the compilation of the pdf*
 
 
-Running `skim()` and `summary()` on the data tells us that there are **`r dim(salary)[1]`** rows and **`r dim(salary)[2]`** columns. Of these, we have 17 `character` columns, 1 `numeric` column and 6 `logical` columns. A quick look at the actual data reveals that we actually have 6 empty columns, which correspond to the 6 `logical` columns, 1 question column that corresponds to the `numeric` column, and 17 other question columns that correspond to the 17 `character` columns. For more details of the dataset and its columns, consult the codebook. 
+Running `skim()` and `summary()` on the data tells us that there are **`r dim(salary)[1]`** rows and **`r dim(salary)[2]`** columns. Of these, we have 17 `character` columns, 1 `numeric` column and 6 `logical` columns. A quick look at the actual data reveals that we actually have 6 empty columns, which correspond to the 6 `logical` columns, 1 question column that corresponds to the `numeric` column, and 17 other question columns that correspond to the 17 `character` columns. For more details on the dataset and its columns, consult the codebook. 
 
 ## Research Questions and Methods
 
@@ -43,7 +43,7 @@ To help answer these questions, we will likely need to employ these cleaning tec
 * Cleaning Variable Names
   * Many of the variable names are crude, long, and contain spaces
 * Cleaning Missing Values
-  * Some individuals answered "prefer not to answer" to some questions
+  * Some individuals answered "prefer not to answer" to some questions, and many left irrelevant questions blank
 * Re-coding Variables Values
   * Some entries in the column corresponding to the work country can be cleaned up and united e.g. US, United States and United States of America to US
 * Cleaning Strings

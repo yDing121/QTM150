@@ -361,118 +361,46 @@ display: none;
 class(salary)</code></pre>
 <pre><code>## [1] &quot;data.frame&quot;</code></pre>
 <pre class="r"><code># salary = salary[1:18]
-thing &lt;- list(
-  `Timestamp` = &quot;Time of survey submission&quot;,
-  `How.old.are.you.` = &quot;Age of participants in the study&quot;,
-  `What.industry.do.you.work.in.` = &quot;industry participants work in&quot;,
-  `Job.title` = &quot;participants job title&quot;,
-  `If.your.job.title.needs.additional.context..please.clarify.here.` = &quot;participants given opportunity to elaborate on the nature of their job&quot;,
-  `What.is.your.annual.salary...You.ll.indicate.the.currency.in.a.later.question..If.you.are.part.time.or.hourly..please.enter.an.annualized.equivalent....what.you.would.earn.if.you.worked.the.job.40.hours.a.week..52.weeks.a.year..` = &quot;Participants&#39; annual salary based on if they worked 40 hours and 52 weeks per year.&quot;,
-  `How.much.additional.monetary.compensation.do.you.get..if.any..for.example..bonuses.or.overtime.in.an.average.year...Please.only.include.monetary.compensation.here..not.the.value.of.benefits.` = &quot;Monetary compensation&quot;,
-  `Please.indicate.the.currency` = &quot;currency of participants income&quot;,
-  `If..Other...please.indicate.the.currency.here..` = &quot;If currency was not part of the provided options, participants specify here&quot;,
-  `If.your.income.needs.additional.context..please.provide.it.here.` = &quot;Additional income context&quot;,
-  `What.country.do.you.work.in.` = &quot;country where participants work&quot;,
-  `If.you.re.in.the.U.S...what.state.do.you.work.in.` = &quot;state if participants work in the US&quot;,
-  `What.city.do.you.work.in.` = &quot;city where participants work&quot;,
-  `How.many.years.of.professional.work.experience.do.you.have.overall.` = &quot;years of work experience, provided in a range of years&quot;,
-  `How.many.years.of.professional.work.experience.do.you.have.in.your.field.` = &quot;years of work experience in specified industry, provided in a range of years&quot;,
-   `What.is.your.highest.level.of.education.completed.` = &quot;highest education level completed&quot;,
-    `What.is.your.gender.` = &quot;participants&#39; gender&quot;,
-    `What.is.your.race...Choose.all.that.apply..` = &quot;participants&#39; race, participants selected all that applied&quot;,
-  `X` = &quot;empty0&quot;,
-  `X.1` = &quot;empty1&quot;,
-  `X.2` = &quot;empty2&quot;,
-  `X.3` = &quot;empty3&quot;,
-  `X.4` = &quot;empty4&quot;,
-  `X.5` = &quot;empty5&quot;
-  )
-  # `X` = &quot;empty0&quot;,
-  # `X.1` = &quot;empty1&quot;,
-  # `X.2` = &quot;empty2&quot;,
-  # `X.3` = &quot;empty3&quot;,
-  # `X.4` = &quot;empty4&quot;,
-  # `X.5` = &quot;empty5&quot;
-thing</code></pre>
-<pre><code>## $Timestamp
-## [1] &quot;Time of survey submission&quot;
-## 
-## $How.old.are.you.
-## [1] &quot;Age of participants in the study&quot;
-## 
-## $What.industry.do.you.work.in.
-## [1] &quot;industry participants work in&quot;
-## 
-## $Job.title
-## [1] &quot;participants job title&quot;
-## 
-## $If.your.job.title.needs.additional.context..please.clarify.here.
-## [1] &quot;participants given opportunity to elaborate on the nature of their job&quot;
-## 
-## $What.is.your.annual.salary...You.ll.indicate.the.currency.in.a.later.question..If.you.are.part.time.or.hourly..please.enter.an.annualized.equivalent....what.you.would.earn.if.you.worked.the.job.40.hours.a.week..52.weeks.a.year..
-## [1] &quot;Participants&#39; annual salary based on if they worked 40 hours and 52 weeks per year.&quot;
-## 
-## $How.much.additional.monetary.compensation.do.you.get..if.any..for.example..bonuses.or.overtime.in.an.average.year...Please.only.include.monetary.compensation.here..not.the.value.of.benefits.
-## [1] &quot;Monetary compensation&quot;
-## 
-## $Please.indicate.the.currency
-## [1] &quot;currency of participants income&quot;
-## 
-## $If..Other...please.indicate.the.currency.here..
-## [1] &quot;If currency was not part of the provided options, participants specify here&quot;
-## 
-## $If.your.income.needs.additional.context..please.provide.it.here.
-## [1] &quot;Additional income context&quot;
-## 
-## $What.country.do.you.work.in.
-## [1] &quot;country where participants work&quot;
-## 
-## $If.you.re.in.the.U.S...what.state.do.you.work.in.
-## [1] &quot;state if participants work in the US&quot;
-## 
-## $What.city.do.you.work.in.
-## [1] &quot;city where participants work&quot;
-## 
-## $How.many.years.of.professional.work.experience.do.you.have.overall.
-## [1] &quot;years of work experience, provided in a range of years&quot;
-## 
-## $How.many.years.of.professional.work.experience.do.you.have.in.your.field.
-## [1] &quot;years of work experience in specified industry, provided in a range of years&quot;
-## 
-## $What.is.your.highest.level.of.education.completed.
-## [1] &quot;highest education level completed&quot;
-## 
-## $What.is.your.gender.
-## [1] &quot;participants&#39; gender&quot;
-## 
-## $What.is.your.race...Choose.all.that.apply..
-## [1] &quot;participants&#39; race, participants selected all that applied&quot;
-## 
-## $X
-## [1] &quot;empty0&quot;
-## 
-## $X.1
-## [1] &quot;empty1&quot;
-## 
-## $X.2
-## [1] &quot;empty2&quot;
-## 
-## $X.3
-## [1] &quot;empty3&quot;
-## 
-## $X.4
-## [1] &quot;empty4&quot;
-## 
-## $X.5
-## [1] &quot;empty5&quot;</code></pre>
-<pre class="r"><code>ncol(salary)</code></pre>
-<pre><code>## [1] 24</code></pre>
-<pre class="r"><code>length(thing)</code></pre>
-<pre><code>## [1] 24</code></pre>
-<pre class="r"><code># colnames(salary)
-# colnames(thing)
-
-var_label(salary) &lt;- thing
+# thing &lt;- list(
+#   `Timestamp` = &quot;Time of survey submission&quot;,
+#   `How.old.are.you.` = &quot;Age of participants in the study&quot;,
+#   `What.industry.do.you.work.in.` = &quot;industry participants work in&quot;,
+#   `Job.title` = &quot;participants job title&quot;,
+#   `If.your.job.title.needs.additional.context..please.clarify.here.` = &quot;participants given opportunity to elaborate on the nature of their job&quot;,
+#   `What.is.your.annual.salary...You.ll.indicate.the.currency.in.a.later.question..If.you.are.part.time.or.hourly..please.enter.an.annualized.equivalent....what.you.would.earn.if.you.worked.the.job.40.hours.a.week..52.weeks.a.year..` = &quot;Participants&#39; annual salary based on if they worked 40 hours and 52 weeks per year.&quot;,
+#   `How.much.additional.monetary.compensation.do.you.get..if.any..for.example..bonuses.or.overtime.in.an.average.year...Please.only.include.monetary.compensation.here..not.the.value.of.benefits.` = &quot;Monetary compensation&quot;,
+#   `Please.indicate.the.currency` = &quot;currency of participants income&quot;,
+#   `If..Other...please.indicate.the.currency.here..` = &quot;If currency was not part of the provided options, participants specify here&quot;,
+#   `If.your.income.needs.additional.context..please.provide.it.here.` = &quot;Additional income context&quot;,
+#   `What.country.do.you.work.in.` = &quot;country where participants work&quot;,
+#   `If.you.re.in.the.U.S...what.state.do.you.work.in.` = &quot;state if participants work in the US&quot;,
+#   `What.city.do.you.work.in.` = &quot;city where participants work&quot;,
+#   `How.many.years.of.professional.work.experience.do.you.have.overall.` = &quot;years of work experience, provided in a range of years&quot;,
+#   `How.many.years.of.professional.work.experience.do.you.have.in.your.field.` = &quot;years of work experience in specified industry, provided in a range of years&quot;,
+#    `What.is.your.highest.level.of.education.completed.` = &quot;highest education level completed&quot;,
+#     `What.is.your.gender.` = &quot;participants&#39; gender&quot;,
+#     `What.is.your.race...Choose.all.that.apply..` = &quot;participants&#39; race, participants selected all that applied&quot;,
+#   `X` = &quot;empty0&quot;,
+#   `X.1` = &quot;empty1&quot;,
+#   `X.2` = &quot;empty2&quot;,
+#   `X.3` = &quot;empty3&quot;,
+#   `X.4` = &quot;empty4&quot;,
+#   `X.5` = &quot;empty5&quot;
+#   )
+#   # `X` = &quot;empty0&quot;,
+#   # `X.1` = &quot;empty1&quot;,
+#   # `X.2` = &quot;empty2&quot;,
+#   # `X.3` = &quot;empty3&quot;,
+#   # `X.4` = &quot;empty4&quot;,
+#   # `X.5` = &quot;empty5&quot;
+# thing
+# 
+# ncol(salary)
+# length(thing)
+# # colnames(salary)
+# # colnames(thing)
+# 
+# var_label(salary) &lt;- thing
 
 new_codebook &lt;- codebookr::codebook(salary,
                                        title = &quot;Salary Codebook&quot;, 
@@ -480,8 +408,30 @@ new_codebook &lt;- codebookr::codebook(salary,
                                        description = &quot;This codebook was created for the final project of our QTM 150 class. Here is a basic 
                     description of our study, our methods, 
                     our sample, and protocols.&quot;)</code></pre>
-<pre class="r"><code># print(new_codebook, path = &quot;./&quot;)
-new_codebook</code></pre>
+<pre class="r"><code>print(new_codebook, path = &quot;./codebook.pdf&quot;)</code></pre>
+<pre><code>## rdocx document with 40 element(s)
+## 
+## * styles:
+##                 Normal              heading 1              heading 2 
+##            &quot;paragraph&quot;            &quot;paragraph&quot;            &quot;paragraph&quot; 
+##              heading 3 Default Paragraph Font           Normal Table 
+##            &quot;paragraph&quot;            &quot;character&quot;                &quot;table&quot; 
+##                No List                 strong               centered 
+##            &quot;numbering&quot;            &quot;character&quot;            &quot;paragraph&quot; 
+##         table_template    Light List Accent 2            Titre 1 Car 
+##                &quot;table&quot;                &quot;table&quot;            &quot;character&quot; 
+##            Titre 2 Car            Titre 3 Car          Image Caption 
+##            &quot;character&quot;            &quot;character&quot;            &quot;paragraph&quot; 
+##          Table Caption     Table Professional                  toc 1 
+##            &quot;paragraph&quot;                &quot;table&quot;            &quot;paragraph&quot; 
+##                  toc 2           Balloon Text    Texte de bulles Car 
+##            &quot;paragraph&quot;            &quot;paragraph&quot;            &quot;character&quot; 
+##           reference_id          graphic title            table title 
+##            &quot;character&quot;            &quot;paragraph&quot;            &quot;paragraph&quot; 
+## 
+## * Content at cursor location:
+## NULL</code></pre>
+<pre class="r"><code>new_codebook</code></pre>
 <pre><code>## rdocx document with 40 element(s)
 ## 
 ## * styles:
@@ -506,7 +456,7 @@ new_codebook</code></pre>
 ## NULL</code></pre>
 <pre class="r"><code># capture.output(r, file=&quot;test.txt&quot;)
 # Write(new_codebook, file = &quot;datacodebook.pdf&quot;)
-capture.output(new_codebook, file=&quot;test.txt&quot;)</code></pre>
+# capture.output(new_codebook, file=&quot;test.txt&quot;)</code></pre>
 
 
 

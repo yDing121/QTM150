@@ -475,7 +475,7 @@ your printer click “Save as PDF.”</p></li>
 <div id="load-necessary-packages" class="section level2">
 <h2>Load necessary packages</h2>
 <pre class="r"><code>raw_ab &lt;- as_tibble(read.csv(&quot;./Datasets/raw_ab.csv&quot;))
-# raw_ab &lt;- read.csv(&quot;./Datasets/raw_ab.csv&quot;)</code></pre>
+# raw_ab &lt;- read.csv(&#39;./Datasets/raw_ab.csv&#39;)</code></pre>
 </div>
 </div>
 <div id="dr.-martin-van-der-linden-hw5-exercises-with-stringr" class="section level1">
@@ -497,8 +497,8 @@ conjunction with regex to keep only rows that have digits in them. Since
 rows containing the value <code>NA</code> do not have any digits, this
 operation also removes rows with <code>NA</code>. We then store this new
 dataframe as <code>ab1</code>.</p>
-<pre class="r"><code>ab1 &lt;- raw_ab[str_detect(raw_ab$CDC, &quot;\\d&quot;),] %&gt;% 
-  drop_na(&quot;CDC&quot;)
+<pre class="r"><code>ab1 &lt;- raw_ab[str_detect(raw_ab$CDC, &quot;\\d&quot;), ] %&gt;%
+    drop_na(&quot;CDC&quot;)
 ab1</code></pre>
 <pre><code>## # A tibble: 2,306 × 5
 ##        X year  CDC    AGI      state
@@ -526,10 +526,10 @@ character as well as the “or” (<code>|</code>) to find all parentheses,
 which we then replace with empty strings. This effectively removes all
 parentheses.</p>
 <pre class="r"><code>ab2 &lt;- ab1
-ab2$CDC &lt;- ab2$CDC %&gt;% 
-  str_replace_all(&quot;\\(|\\)&quot;, &quot;&quot;)
-ab2$AGI &lt;- ab2$AGI %&gt;% 
-  str_replace_all(&quot;\\(|\\)&quot;, &quot;&quot;)
+ab2$CDC &lt;- ab2$CDC %&gt;%
+    str_replace_all(&quot;\\(|\\)&quot;, &quot;&quot;)
+ab2$AGI &lt;- ab2$AGI %&gt;%
+    str_replace_all(&quot;\\(|\\)&quot;, &quot;&quot;)
 ab2</code></pre>
 <pre><code>## # A tibble: 2,306 × 5
 ##        X year  CDC    AGI      state
@@ -558,10 +558,10 @@ have to remove the commas. We do an operation similar to what we did
 with the parenthesis - finding commas with regex and replacing them with
 empty strings.</p>
 <pre class="r"><code>ab3 &lt;- ab2
-ab3$CDC &lt;- ab3$CDC %&gt;% 
-  str_replace_all(&quot;,&quot;, &quot;&quot;)
-ab3$AGI &lt;- ab3$AGI %&gt;% 
-  str_replace_all(&quot;,&quot;, &quot;&quot;)
+ab3$CDC &lt;- ab3$CDC %&gt;%
+    str_replace_all(&quot;,&quot;, &quot;&quot;)
+ab3$AGI &lt;- ab3$AGI %&gt;%
+    str_replace_all(&quot;,&quot;, &quot;&quot;)
 ab3</code></pre>
 <pre><code>## # A tibble: 2,306 × 5
 ##        X year  CDC   AGI     state
@@ -586,9 +586,9 @@ drop the column <code>X</code> - we will not need this column. We will
 then use array indexing to grab the columns we want, then use
 <code>as.numeric()</code> in conjunction with <code>apply()</code> to
 execute this conversion.</p>
-<pre class="r"><code>ab4 &lt;- ab3 %&gt;% 
-  select(&quot;year&quot;:&quot;state&quot;)
-ab4[1:3] &lt;- apply(ab4[,1:3], 2, function(x) as.numeric(x))
+<pre class="r"><code>ab4 &lt;- ab3 %&gt;%
+    select(&quot;year&quot;:&quot;state&quot;)
+ab4[1:3] &lt;- apply(ab4[, 1:3], 2, function(x) as.numeric(x))
 ab4</code></pre>
 <pre><code>## # A tibble: 2,306 × 4
 ##     year   CDC   AGI state
@@ -610,7 +610,8 @@ ab4</code></pre>
 <h1>Decoding the Secret Message in <code>Puzzle 4.1</code></h1>
 <p>Apparently there is a secret message hidden in <a href="%22https://www.adventures-in-r.com/pas/pa-regex%22">this
 puzzle</a>. Let’s load it and see what it is about.</p>
-<pre class="r"><code>message &lt;- read.csv(&quot;https://www.dropbox.com/s/lgpn3vmksk3ssdo/scrambled_message.txt?dl=1&quot;, stringsAsFactors = FALSE)$Word
+<pre class="r"><code>message &lt;- read.csv(&quot;https://www.dropbox.com/s/lgpn3vmksk3ssdo/scrambled_message.txt?dl=1&quot;,
+    stringsAsFactors = FALSE)$Word
 head(message)</code></pre>
 <pre><code>## [1] &quot;              Koila!&quot;      &quot;               In   &quot;     
 ## [3] &quot;               kiew,&quot;      &quot;                   a&quot;     
@@ -625,10 +626,10 @@ the Warm-up exercises, then try to decode the message.</p>
 in the message. We will assume that this means removing the spaces with
 <code>str_trim()</code> then summing the lengths
 (<code>str_length()</code>) of the remaining strings.</p>
-<pre class="r"><code>message %&gt;% 
-  str_trim() %&gt;% 
-  str_length() %&gt;% 
-  sum()</code></pre>
+<pre class="r"><code>message %&gt;%
+    str_trim() %&gt;%
+    str_length() %&gt;%
+    sum()</code></pre>
 <pre><code>## [1] 892</code></pre>
 </div>
 <div id="number-of-words" class="section level3">
@@ -638,9 +639,9 @@ white space - in other words, any non-whitespace element in the
 <code>message</code> vector is a “word”. We will use
 <code>str_trim()</code> to remove the whitespace then use
 <code>length()</code> to find the number of elements in the vector.</p>
-<pre class="r"><code>message %&gt;% 
-  str_trim() %&gt;% 
-  length()</code></pre>
+<pre class="r"><code>message %&gt;%
+    str_trim() %&gt;%
+    length()</code></pre>
 <pre><code>## [1] 127</code></pre>
 </div>
 <div id="show-punctuation-marks" class="section level3">
@@ -693,14 +694,15 @@ capitalize the “word”.</p>
 <p>We will now follow the steps on the challenge page to decode the
 message. We first remove any whitespace before and after each word using
 <code>str_trim()</code>.</p>
-<pre class="r"><code>message &lt;- message %&gt;% 
-  str_trim()
+<pre class="r"><code>message &lt;- message %&gt;%
+    str_trim()
 # message</code></pre>
 <p>Then we drop all characters off the end of each word that is more
 than 16 characters long. To do so, we first locate all strings longer
 than 16 characters, then we replace those strings with their respective
 first 16 characters.</p>
-<pre class="r"><code>message[str_length(message) &gt; 16] &lt;- str_sub(message[str_length(message) &gt; 16], 1, 16)
+<pre class="r"><code>message[str_length(message) &gt; 16] &lt;- str_sub(message[str_length(message) &gt;
+    16], 1, 16)
 
 # Debug
 max(str_length(message))</code></pre>
@@ -712,8 +714,8 @@ punctuation. We achieve the matching by using the regex repetition
 character <code>+</code> and the punctuation character class
 <code>[:punct:]</code>. We then replace the matches with empty strings
 <code>&quot;&quot;</code>.</p>
-<pre class="r"><code>message &lt;- message %&gt;% 
-  str_replace_all(&quot;ugh+[:punct:]&quot;, &quot;&quot;)
+<pre class="r"><code>message &lt;- message %&gt;%
+    str_replace_all(&quot;ugh+[:punct:]&quot;, &quot;&quot;)
 # message</code></pre>
 <p>Following that, we are to replace all instances of exactly 2
 <code>a</code>s with exactly 2 <code>e</code>s. We will do so by finding
@@ -723,19 +725,21 @@ all elements of <code>message</code> that contain exactly 2
 <p><em>I forgot that <code>str_count()</code> existed at all before
 looking at the cheat sheet when checking this. I left my original
 solution with regex, which should also work.</em></p>
-<pre class="r"><code>message[str_count(message, &quot;a&quot;)==2] &lt;- message[str_count(message, &quot;a&quot;)==2] %&gt;% 
-  str_replace_all(&quot;a&quot;, &quot;e&quot;)
+<pre class="r"><code>message[str_count(message, &quot;a&quot;) == 2] &lt;- message[str_count(message,
+    &quot;a&quot;) == 2] %&gt;%
+    str_replace_all(&quot;a&quot;, &quot;e&quot;)
 
-# message[str_detect(message, &quot;^.*a.*a.*$&quot;)] &lt;- message[str_detect(message, &quot;^.*a.*a.*$&quot;)] %&gt;%
-#   str_replace_all(&quot;a&quot;, &quot;e&quot;)
+# message[str_detect(message, &#39;^.*a.*a.*$&#39;)] &lt;-
+# message[str_detect(message, &#39;^.*a.*a.*$&#39;)] %&gt;%
+# str_replace_all(&#39;a&#39;, &#39;e&#39;)
 
 # message</code></pre>
 <p>The next step asks us to replace all <code>z</code>s with
 <code>t</code>s. This is simple - we can use
 <code>str_replace_all()</code> to quickly replace every <code>z</code>
 with a <code>t</code>.</p>
-<pre class="r"><code>message &lt;- message %&gt;% 
-  str_replace_all(&quot;z&quot;, &quot;t&quot;)
+<pre class="r"><code>message &lt;- message %&gt;%
+    str_replace_all(&quot;z&quot;, &quot;t&quot;)
 # message</code></pre>
 <p>We then want to change all words that end in a <code>b</code> to a
 <code>y</code>. That means even words with punctuation like
@@ -758,13 +762,14 @@ practice but since we are only dealing with one case we do not need a
 general solution. Also, we will not retain the capitalization of the
 <code>k</code> - we will replace all matches with a lowercase
 <code>v</code>.</p>
-<pre class="r"><code>message &lt;- message %&gt;% 
-  str_replace(&quot;^(K|k)&quot;, &quot;v&quot;)
+<pre class="r"><code>message &lt;- message %&gt;%
+    str_replace(&quot;^(K|k)&quot;, &quot;v&quot;)
 # message</code></pre>
 <p>Finally, we combine <code>message</code> via
 <code>str_c()</code>.</p>
-<pre class="r"><code>message %&gt;% 
-  str_c(&quot; &quot;, collapse = &quot;&quot;)</code></pre>
+<pre class="r"><code>options(width = 60)
+message %&gt;%
+    str_c(&quot; &quot;, collapse = &quot;&quot;)</code></pre>
 <pre><code>## [1] &quot;voila! In view, a humble veudevillien veteran, cast vicariously as both victim and villain by the vicissitudes of fate. This visage, no mere veneer of vanity, is a vestige of the vox populi now vecent, vanished. However, this valorous visitation of a bygone vexation stands vivified, and has vowed to vanquish these venal and virulent vermin, van guarding vice and vouchsafing the violently vicious and voracious violation of volition. The only verdict is vengeance; a vendetta, held as a votive not in vain, for the value and veracity of such shall one day vindicate the vigilant and the virtuous. verily this vichyssoise of verbiage veers most verbose, so let me simply add that its my very good honour to meet you and you may call me v. &quot;</code></pre>
 <p>A quick google search tells us that this quote is from <em>V for
 Vendetta</em>, said by <strong>Alan Moore</strong>.</p>

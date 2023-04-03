@@ -1,0 +1,171 @@
+---
+title: "Salary_Codebook"
+author: "Lance Ding, Grayson Stark, Kristy Tran"
+date: "2023-04"
+output:
+  pdf_document: default
+  html_document: default
+---
+# Codebook for `salary`
+
+## Data Overview
+This dataset was downloaded from [this google sheet](https://docs.google.com/spreadsheets/d/1IPS5dBSGtwYVbjsfbaMCYIWnOuRmJcbequohNxCyGVw/edit?resourcekey#gid=1625408792), and contains salary information. It is a dataset generated from user responses to the 2021 version of [this survey](https://www.askamanager.org/2022/04/how-much-money-do-you-make-5.html) on [Ask a Manager](https://www.askamanager.org/). The survey asked about the salary situation as well as work location of individuals, and was voluntary. Each row records one respondee's answers to the survey, and each column records the respondees' answers to one question.
+
+## Variable List
+
+* **Timestamp**
+  * `character`
+  * The submission date and time of the survey. Comes in the form *M/D/Y 24H:M:S*
+
+* **How old are you?**
+  * `character`
+  * The age of the respondee in years, divided into age categories. Possible values are:
+    - under 18
+    - 18-24
+    - 25-34
+    - 35-44
+    - 45-54
+    - 55-64
+    - 65 or over
+
+* **What industry do you work in?**
+  * `character`
+  * Field that the respondee works in. Possible values are:
+    - Accounting, Banking & Finance
+    - Agriculture or Forestry
+    - Art & Design
+    - Business or Consulting
+    - Computing or Tech
+    - Education (Primary/Secondary)
+    - Education (Higher Education)
+    - Engineering or Manufacturing
+    - Entertainment
+    - Government & Public Administration
+    - Government Affairs & Lobbying
+    - Health care
+    - Hospitality & Events
+    - Insurance
+    - Law
+    - Law Enforcement & Security
+    - Leisure, Sport & Tourism
+    - Marketing, Advertising & PR
+    - Media & Digital
+    - Nonprofits
+    - Property or Construction
+    - Recruitment or HR
+    - Retail
+    - Sales
+    - Science
+    - Social Work
+    - Transport or Logistics
+    - Utilities & Telecommunications
+    - \<Other\>
+
+* **Job title**
+  * `character`
+  * The formal title of the position that the respondee holds.
+
+* **If your job title needs additional context, please clarify here:**
+  * `character`
+  * The additional context that may be needed for a job title.
+
+* **What is your annual salary? (You'll indicate the currency in a later question. If you are part-time or hourly, please enter an annualized equivalent -- what you would earn if you worked the job 40 hours a week, 52 weeks a year.)**
+  * `character`
+  * The unitless annual salary of the respondee. For respondees who work a part-time job or are paid hourly, the value is an estimate of an annualized equivalent of their pay based on an assumption of a 40 hour work week, 52 weeks a year. The currency unit is specified in **Please indicate the currency**
+
+* **How much additional monetary compensation do you get, if any (for example, bonuses or overtime in an average year)? Please only include monetary compensation here, not the value of benefits.**
+  * `numeric`
+  * The unitless monetary compensation that the respondee receives outside the value of benefits (for example, bonuses or overtime in an average year). 
+
+* **Please indicate the currency**
+  * `character`
+  * 3-letter currency code for the type of currency that the respondee is paid with. For example, United States dollars are abbreviated as USD. Possible values are:
+    - USD
+    - EUR
+    - JPY
+    - GBP
+    - CHF
+    - CAD
+    - AUD/NZD
+    - ZAR
+    - HKD
+    - SEK
+    - \<Other\>
+
+* **If "Other," please indicate the currency here:**
+  * `character`
+  * 3-letter currency code for the type of currency that the respondee is paid with, if the currency is not a listed choice for **Please indicate the currency**.
+
+* **If your income needs additional context, please provide it here:**
+  * `character`
+  * Additional context that may be important to the understanding of the respondee's income.
+
+* **What country do you work in?**
+  * `character`
+  * Country that the respondee works in. Possible values are:
+  
+* **If you're in the U.S., what state do you work in?**
+  * `character`
+  * Name of the state that the respondee works in, if they work in the United States. Values include full state names
+
+* **What city do you work in?**
+  * `character`
+  * Name of the city that the respondee works in.
+
+* **How many years of professional work experience do you have overall?**
+  * `character`
+  * The amount of professional work experience the respondee has overall (in years). Possible values are:
+    - 1 year or less
+    - 2-4 years
+    - 5-7 years
+    - 8-10 years
+    - 11-20 years
+    - 21-30 years
+    - 31-40 years
+    - 41 years or more
+
+* **How many years of professional work experience do you have in your field?**
+  * `character`
+  * The amount of professional work experience the respondee has in their current field (in years). Possible values are:
+    - 1 year or less
+    - 2-4 years
+    - 5-7 years
+    - 8-10 years
+    - 11-20 years
+    - 21-30 years
+    - 31-40 years
+    - 41 years or more
+
+* **What is your highest level of education completed?**
+  * `character`
+  * The highest level of education that the respondee has attained. Possible values are:
+    - High School
+    - Some college
+    - College degree
+    - Master's degree
+    - PhD
+    - Professional degree (Md, JD, etc.)
+
+* **What is your gender?**
+  * `character`
+  * Gender of the respondee. Possible values are:
+    - Man
+    - Woman
+    - Non-binary
+    - Other or prefer not to answer
+    - Prefer not to answer
+
+* **What is your race? (Choose all that apply.)**
+  * `character`
+  * Race of the respondee. Choices may be a combination of these possible values:
+    - Asian or Asian American
+    - Black or African American
+    - Hispanic, Latino, or Spanish origin
+    - Middle Eastern or Northern African
+    - Native American or Alaska Native
+    - White
+    - Another option not listed here or prefer not to answer
+
+* **X, X.1, ... X.5**
+  * Logical
+  * Empty columns left over from the porting of the original google sheet to a `.csv` format

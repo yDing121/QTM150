@@ -1,22 +1,16 @@
-rdocx document with 40 element(s)
+rdocx document with 36 element(s)
 
 * styles:
-                Normal              heading 1              heading 2 
-           "paragraph"            "paragraph"            "paragraph" 
-             heading 3 Default Paragraph Font           Normal Table 
-           "paragraph"            "character"                "table" 
-               No List                 strong               centered 
-           "numbering"            "character"            "paragraph" 
-        table_template    Light List Accent 2            Titre 1 Car 
-               "table"                "table"            "character" 
-           Titre 2 Car            Titre 3 Car          Image Caption 
-           "character"            "character"            "paragraph" 
-         Table Caption     Table Professional                  toc 1 
-           "paragraph"                "table"            "paragraph" 
-                 toc 2           Balloon Text    Texte de bulles Car 
-           "paragraph"            "paragraph"            "character" 
-          reference_id          graphic title            table title 
-           "character"            "paragraph"            "paragraph" 
+                Normal              heading 1              heading 2              heading 3 Default Paragraph Font 
+           "paragraph"            "paragraph"            "paragraph"            "paragraph"            "character" 
+          Normal Table                No List                 strong               centered         table_template 
+               "table"            "numbering"            "character"            "paragraph"                "table" 
+   Light List Accent 2            Titre 1 Car            Titre 2 Car            Titre 3 Car          Image Caption 
+               "table"            "character"            "character"            "character"            "paragraph" 
+         Table Caption     Table Professional                  toc 1                  toc 2           Balloon Text 
+           "paragraph"                "table"            "paragraph"            "paragraph"            "paragraph" 
+   Texte de bulles Car           reference_id          graphic title            table title 
+           "character"            "character"            "paragraph"            "paragraph" 
 
 * Content at cursor location:
 NULL

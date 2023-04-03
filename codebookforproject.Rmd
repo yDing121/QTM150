@@ -18,7 +18,7 @@ library(codebook)
 
 
 ```{r}
-thing <- list(
+var_label(salary) <- list(
   `How old are you?` = "Age of participants in the study",
   `What industry do you work in?` = "industry participants work in",
   `Job title` = "participants job title",
@@ -35,6 +35,8 @@ thing <- list(
    `What is your highest level of education completed?` = "highest education level completed",
     `What is your gender?` = "participants' gender",
     `What is your race? (Choose all that apply.)` = "participants' race, participants selected all that applied"
+    
+  
 )
 
 
@@ -52,5 +54,6 @@ new_codebook <- codebookr::codebook(salary,
 ```{r}
 print(new_codebook, path = "new_codebook.pdf")
 ```
+
 
 
