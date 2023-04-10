@@ -1,0 +1,70 @@
+---
+title: "HW 7"
+author: "Zach Binney"
+date: "October 2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+pacman::p_load(knitr, tidyverse)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Instructions
+
+**Write this homework acting as if I don't know what I asked you. For example, don't simply list question numbers for the headings. If you gave this document to someone else who didn't know the assignment, they should be able to understand what you did by reading the headings, code, and accompanying text.**
+
+**Look to my HW1 and RMarkdown Organization examples for how to write good headings and organize your assignment.**
+
+This HW is worth 10 total points. It leans heavily on activities from the [Adventures in R Course created by Dr. Kelly Bodwin of California Polytechnic State University](https://www.adventures-in-r.com/).
+
+1. Change the author and date fields in the header above to your name and the date.
+
+2. Make sure to load any packages you may need right at the start. Do *NOT* include the `learnr` package, ever, unless you are writing an interactive Tutorial (which you won't do in this) - this will cause problems.
+
+3. Ensure that no chunks have the `include = FALSE` or `echo = FALSE` option, as I want to be able to see *all* your code and output.
+
+4. Brief but descriptive headings and document organization (answers under headings, text near relevant code, brief explanatory text as indicated below, etc.) (1 pt)
+
+    
+5. For practice with `lubridate`, find the identity of the Zodiac Killer (sadly, not Ted Cruz's father) by solving [Puzzle 3](https://www.adventures-in-r.com/post/03-tidy-factors/) from Adventures in R. (4.5 pts)
+
+    HINTS AND CLARIFICATIONS:
+    
+    * There are many ways to accomplish this puzzle. Some - but not all - may require explicitly formatting `Time.Spotted` as a datetime and/or a date.
+    
+    * Note the problem should read the number of the *day* is 22, not the number of the *month* is 22.
+    
+    * You should *not* need to complete Question 4 (the Iceland criterion) to complete this puzzle, and it requires fighting with time zones, so please skip it.
+    
+
+6. **Create a map.** It must have at least two groups/regions. Those groups/regions should be colored according to some value of a third valuable. In other words, make a map that displays some interesting differences across a geographic area. 
+
+    You can choose any geographic area you want and can find map data for in R. Examples might include U.S. states; different countries in Europe, Asia, Africa, or the Americas; and Chinese provinces. (Because I suspect many of you might be interested in mapping within China: For some reason, at least for me, using `map_data("china")` and the `ggplot()` methods we discussed produces an incorrect map with odd, piecemeal provincial borders. I do not know why. If you have the same problem, as a solution I recommend using [Guangchang Yu's `chinamap` package](https://github.com/GuangchuangYu/chinamap). You install it using `remotes::install_github("GuangchuangYu/chinamap")`, then create the map data frame using the `get_map_china()` function. From there you should be able to use the techniques we learned to generate a provincial map. [Here](https://guangchuangyu.github.io/chinamap/) are some examples of maps he made with that package. Note he uses a slightly different technique, `geom_map()`, but `geom_polygon()` seems to work just fine, too. Let me know if you're having difficulty here, though!)
+
+    The variable you map can be *anything* that varies across the geographic area you're mapping. It cannot be from a data frame included in Tutorial 7.1, but otherwise you are free to choose whatever interests you! Note this part of the assignment does require you to find some data on your own (though it can be a data frame we've worked with in the past), import it, and link it to the map data. Linking may be a bit tricky - remember the region names will have to match *exactly*, including in capitalization. Use functions like `str_to_lower()` to help with that. 
+
+    **Describe** in narrative text what your code is doing. I want more detail than usual - you can describe the importing and linking briefly (about 1 sentence or comment per code block), but for the map-related code itself I want you to describe it essentially line by line. Basically, prove to me you can explain, in your own words, what your code is doing and how it's working to create the map. (4.5 pts)
+
+    
+**To submit this assignment:**
+
+Ideally, knit straight to PDF by changing `html_document` to `pdf_document` in line 5 above. This should work as long as you properly installed LaTeX in Tutorial 0.1. Otherwise:
+
+1. Knit to HTML. An HTML document should open automatically in another RStudio window.
+
+2. Click "Open in Browser" in that HTML document. It should open as a webpage in your default browser (e.g. Chrome).
+
+3. Click Ctrl+P/Command+P, but instead of printing a hard copy on your printer click "Save as PDF."
+
+4. Save and upload that document to Canvas.
+    
+    
+
+
+------BEGIN ANSWER BELOW--------
+
+
+
+
+
