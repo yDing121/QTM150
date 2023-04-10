@@ -1,7 +1,13 @@
 pacman::p_load(tidyverse)
-china <- map_data("world") %>% 
-  filter(region == "China")
-head(china, 100)
+france <- map_data("world") %>% 
+  filter(region == "France")
+head(france, 100)
 
-ggplot(china, aes(x = long, y = lat)) +
-  geom_polygon(aes(group = group))
+# ggplot(china, aes(x = long, y = lat)) +
+#   geom_polygon(aes(group = group))
+
+france <- france %>% 
+  arrange(group)
+france
+france$group[1]
+france$group[length(france)]

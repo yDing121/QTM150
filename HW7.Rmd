@@ -1,7 +1,7 @@
 ---
-title: "HW 7"
-author: "Zach Binney"
-date: "October 2021"
+title: "HW7"
+author: "Lance Ding"
+date: "April 2023"
 output: html_document
 ---
 
@@ -64,7 +64,49 @@ Ideally, knit straight to PDF by changing `html_document` to `pdf_document` in l
 
 ------BEGIN ANSWER BELOW--------
 
+# Dates and Maps
 
+```{r load packages}
+pacman::p_load(tidyverse, lubridate)
+suspects <- read.csv("./Datasets/suspect_times.csv")
+```
 
+## Finding the Zodiac Killer
 
+```{r murder was not comitted in the morning}
+# head(suspects)
+summary(suspects)
+
+suspects$Time.Spotted <- ymd_hms(suspects$Time.Spotted)
+# class(suspects$Time.Spotted)
+
+suspects <- suspects %>%
+  filter(hour(Time.Spotted) >= 12)
+# suspects
+```
+
+```{r murder was not committed on T/Th}
+suspects <- suspects %>% 
+  filter(!(day(Time.Spotted) %in% c(3,5)))
+# suspects
+```
+
+```{r murder was committed within 35 days of thxgvn}
+thxgvn <- ymd("2018-11-22")
+suspects <- suspects %>% 
+  filter(Time.Spotted %within%
+           interval(thxgvn-35,thxgvn+35))
+# suspects
+```
+
+```{r killer left card - day22}
+suspects <- suspects %>% 
+  filter(day(Time.Spotted) %in% c(22:24))
+suspects
+```
+
+```{r mins(spotted - 1970)%10 is 0}
+suspects <- suspects %>% 
+  filter(mins()%10 == 0)
+```
 
