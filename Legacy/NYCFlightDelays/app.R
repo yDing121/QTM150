@@ -46,7 +46,7 @@ flights_clean <- gdata %>%
 # UI
 ui <- fluidPage(
   # App title
-  titlePanel("NYC Flight Delays", windowTitle = "NYC Flight Delays"),
+  titlePanel("NYC Flight Delays by Airport", windowTitle = "NYC Flight Delays"),
   
   # Sidebar layout
   sidebarLayout(
@@ -89,7 +89,7 @@ server <- function(input, output){
       ggplot(mapping = aes(x=month, y=value)) +
       geom_bar(stat = "identity", fill="pink") +
       labs(x = "Month",
-           y = "Delay (minutes)",
+           y = "Average delay (minutes)",
            title = paste(input$dep_arr, "at", input$origin, "by month"))
   })
 }

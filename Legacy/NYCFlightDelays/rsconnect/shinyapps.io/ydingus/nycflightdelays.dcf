@@ -1,0 +1,13 @@
+name: nycflightdelays
+title:
+username:
+account: ydingus
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 8863872
+bundleId: 7095166
+url: https://ydingus.shinyapps.io/nycflightdelays/
+when: 1681632083.21296
+lastSyncTime: 1681632083.21297
+asMultiple: FALSE
+asStatic: FALSE

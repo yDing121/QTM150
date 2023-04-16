@@ -455,8 +455,8 @@ your printer click “Save as PDF.”</p></li>
 <h2>Load Required Packages</h2>
 <pre class="r"><code># remotes::install_github(&quot;GuangchuangYu/chinamap&quot;)
 pacman::p_load(tidyverse, lubridate, chinamap, sp, readxl)
-suspects &lt;- read.csv(&quot;./Datasets/suspect_times.csv&quot;)
-lifeExp &lt;- read_excel(&quot;./Datasets/lifeExpectancy2010.xls&quot;)</code></pre>
+suspects &lt;- read.csv(&quot;../Datasets/suspect_times.csv&quot;)
+lifeExp &lt;- read_excel(&quot;../Datasets/lifeExpectancy2010.xls&quot;)</code></pre>
 <pre><code>## New names:
 ## • `` -&gt; `...2`</code></pre>
 </div>
@@ -578,23 +578,17 @@ translating* the Chinese column names to English.</p>
 that was a line of metadata. The actual column names were on the 4th
 line. Instead of fixing the column names then translating them I just
 got rid of all irrelevant metadata and added the translated names.</p>
-<p>After cleaning <code>lifeExp</code>, we then use a
-<code>left_join()</code> to join the life expectancy information to our
-map information stored in <code>china</code>.</p>
 <pre class="r"><code>colnames(lifeExp) &lt;- c(&quot;region&quot;, &quot;life_expectancy&quot;)
 lifeExp &lt;- lifeExp[4:34,] %&gt;% 
-  mutate(life_expectancy = as.double(life_expectancy))
-# head(lifeExp)
-
-china &lt;- get_map_china()</code></pre>
+  mutate(life_expectancy = as.double(life_expectancy))</code></pre>
+<p>After cleaning <code>lifeExp</code>, we use a
+<code>left_join()</code> to join the life expectancy information to our
+map information stored in <code>china</code>.</p>
+<pre class="r"><code>china &lt;- get_map_china()</code></pre>
 <pre><code>## Regions defined for each Polygons</code></pre>
-<pre class="r"><code># head(china)
-
-china_life &lt;- china %&gt;%
+<pre class="r"><code>china_life &lt;- china %&gt;%
   left_join(lifeExp,
-            by = c(&quot;province&quot; = &quot;region&quot;))
-
-# head(china_life)</code></pre>
+            by = c(&quot;province&quot; = &quot;region&quot;))</code></pre>
 <p>Now that we have the dataframe that we want, we can construct the
 map. We start the map with a <code>ggplot()</code> call, passing the
 longitude and latitude data of each of our points as the x and y

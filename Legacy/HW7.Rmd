@@ -74,8 +74,8 @@ Ideally, knit straight to PDF by changing `html_document` to `pdf_document` in l
 ```{r load packages}
 # remotes::install_github("GuangchuangYu/chinamap")
 pacman::p_load(tidyverse, lubridate, chinamap, sp, readxl)
-suspects <- read.csv("./Datasets/suspect_times.csv")
-lifeExp <- read_excel("./Datasets/lifeExpectancy2010.xls")
+suspects <- read.csv("../Datasets/suspect_times.csv")
+lifeExp <- read_excel("../Datasets/lifeExpectancy2010.xls")
 ```
 
 ## Finding the Zodiac Killer
@@ -141,22 +141,20 @@ Now we are going to create a map of China. This map will utilize the geometry fr
 
 *I technically didn't translate the column names that R imported - that was a line of metadata. The actual column names were on the 4th line. Instead of fixing the column names then translating them I just got rid of all irrelevant metadata and added the translated names.
 
-After cleaning `lifeExp`, we then use a `left_join()` to join the life expectancy information to our map information stored in `china`.
-
-```{r cleaning and joining}
+```{r cleaning}
 colnames(lifeExp) <- c("region", "life_expectancy")
 lifeExp <- lifeExp[4:34,] %>% 
   mutate(life_expectancy = as.double(life_expectancy))
-# head(lifeExp)
+```
 
+After cleaning `lifeExp`, we use a `left_join()` to join the life expectancy information to our map information stored in `china`.
+
+```{r joining}
 china <- get_map_china()
-# head(china)
 
 china_life <- china %>%
   left_join(lifeExp,
             by = c("province" = "region"))
-
-# head(china_life)
 ```
 
 Now that we have the dataframe that we want, we can construct the map. We start the map with a `ggplot()` call, passing the longitude and latitude data of each of our points as the x and y coordinates of the plot, and using our newly joined `life_expectancy` column as the fill value. We then draw the map using `geom_polygon()`, passing `aes(group = group)` to tell R to "lift its pen" when necessary, allowing us to draw the province boundaries as well as outlying islands without the lines crossing back over each other after each shape has been drawn. Finally, we throw in some color in the form of `scale_fill_viridis_c()`, clean up the unnecessary elements via the `clean_map` theme from the tutorial, and give the plot its title and labels. 
