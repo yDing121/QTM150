@@ -1,0 +1,58 @@
+---
+title: "Exploring Salary Information from Ask a Manager's 2021 Survey"
+author: "Lance Ding, Grayson Stark, Kristy Tran"
+date: "2023-04-17"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Import Packages
+
+```{r load packages}
+pacman::p_load(tidyverse, lubridate)
+salary <- read.csv("./Datasets/salary.csv")
+```
+
+# Data Cleaning
+```{r cleaning names}
+salary_clean_names <- salary %>% 
+  janitor::clean_names() %>% 
+  select(1:18) %>% 
+  rename(age = how_old_are_you,
+         industry = what_industry_do_you_work_in,
+         job_title_context = if_your_job_title_needs_additional_context_please_clarify_here,
+         extrapolated_annual_salary_unitless = what_is_your_annual_salary_you_ll_indicate_the_currency_in_a_later_question_if_you_are_part_time_or_hourly_please_enter_an_annualized_equivalent_what_you_would_earn_if_you_worked_the_job_40_hours_a_week_52_weeks_a_year,
+         compensation = how_much_additional_monetary_compensation_do_you_get_if_any_for_example_bonuses_or_overtime_in_an_average_year_please_only_include_monetary_compensation_here_not_the_value_of_benefits,
+         currency = please_indicate_the_currency,
+         other_currency = if_other_please_indicate_the_currency_here,
+         income_context = if_your_income_needs_additional_context_please_provide_it_here,
+         country = what_country_do_you_work_in,
+         us_state = if_you_re_in_the_u_s_what_state_do_you_work_in,
+         city = what_city_do_you_work_in,
+         overall_exp = how_many_years_of_professional_work_experience_do_you_have_overall,
+         field_exp = how_many_years_of_professional_work_experience_do_you_have_in_your_field,
+         education = what_is_your_highest_level_of_education_completed,
+         gender = what_is_your_gender,
+         race = what_is_your_race_choose_all_that_apply)
+
+# Everything lowercase
+for (i in 1:18){
+  salary_clean_names[[i]] = str_to_lower(salary_clean_names[[i]])
+}
+```
+
+```{r change data type}
+salary_clean_dtype <- salary_clean_names %>% 
+  mutate(timestamp = mdy_hms(timestamp),
+         age = factor(age),
+         overall_exp = factor(overall_exp),
+         field_exp = factor(field_exp),
+         currency = factor(currency))
+```
+
+```{r US and UK filter}
+```
+
