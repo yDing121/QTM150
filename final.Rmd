@@ -50,8 +50,27 @@ salary_clean_dtype <- salary_clean_names %>%
          age = factor(age),
          overall_exp = factor(overall_exp),
          field_exp = factor(field_exp),
-         currency = factor(currency))
+         currency = factor(currency),
+         education = factor(education),
+         gender = factor(gender),
+         is_white = str_detect(salary_clean_dtype$race, "white"))
+
+
+
+salary_clean_dtype$extrapolated_annual_salary_unitless <- salary_clean_dtype$extrapolated_annual_salary_unitless %>%
+  str_replace_all(",", "") %>% 
+  as.double()
 ```
+
+```{r race distribution}
+salary_clean_dtype %>% 
+  group_by(race) %>% 
+  summarize(cnt = n()) %>% 
+  arrange(desc(cnt)) %>% 
+  ggplot(mapping = aes(x = race, y = cnt)) +
+    geom_bar(stat = "identity")
+```
+
 
 ```{r US and UK filter}
 ```
