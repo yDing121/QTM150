@@ -470,7 +470,7 @@ salary_clean_country &lt;- salary_clean_country %&gt;%
 ##  8 &quot;&quot;                                                         133
 ##  9 &quot;black or african american, white&quot;                         100
 ## 10 &quot;middle eastern or northern african, white&quot;                 73
-## # ℹ 35 more rows</code></pre>
+## # … with 35 more rows</code></pre>
 <pre class="r"><code>#%&gt;% 
  # ggplot(mapping = aes(x = race, y = cnt)) +
     #geom_bar(stat = &quot;identity&quot;)</code></pre>
@@ -508,10 +508,7 @@ and women.</p>
   mutate(education = fct_relevel(education, &quot;High School&quot;, &quot;Some College&quot;, &quot;Bachelor&#39;s&quot;, &quot;Master&#39;s&quot;, &quot;Ph.D.&quot;, &quot;Professional Degree&quot;, &quot;Other&quot;)) %&gt;% 
   filter(gender == &quot;man&quot; | gender == &quot;woman&quot;,
          education != &quot;&quot;)</code></pre>
-<pre><code>## Warning: There was 1 warning in `mutate()`.
-## ℹ In argument: `education = fct_relevel(...)`.
-## Caused by warning:
-## ! 1 unknown level in `f`: Other</code></pre>
+<pre><code>## Warning: 1 unknown level in `f`: Other</code></pre>
 <pre class="r"><code>education_gender_cleaned %&gt;% 
   ggplot(aes(x = education)) +
   geom_bar(fill = &quot;#000080&quot;) +
