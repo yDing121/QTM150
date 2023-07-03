@@ -3,8 +3,8 @@ title: "Exploring Salary Information from *Ask a Manager's* 2021 Survey"
 author: "Lance Ding, Grayson Stark, & Kristy Tran"
 date: "April 2023"
 output:
-  html_document: default
   pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
